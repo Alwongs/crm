@@ -1,5 +1,5 @@
-import router from '../router'
-import { auth } from '../firebase'
+import router from '@/router'
+import { auth } from '@/firebase'
 import { getDatabase, set, ref } from "firebase/database";
 import {
     createUserWithEmailAndPassword, 

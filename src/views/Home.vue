@@ -4,23 +4,22 @@
             <h1>Счет</h1>
         </header>
         <main class="content">
-            <div class="bill">
-                <h2>Счет в валюте</h2>
-                <div class="bill-content">
-                    12.0 Р
-                </div>
-            </div>
-            <div class="currency">
-                <h2>Курс валют</h2>
-            </div>
+            <the-bill />
+            <the-currency />
         </main>
     </div>
 </template>
 
 <script>
+import TheBill from '@/components/home/TheBill.vue'
+import TheCurrency from '@/components/home/TheCurrency.vue'
 
 export default {
     name: 'Home',
+    components: { 
+        TheBill, 
+        TheCurrency 
+    },
 }
 </script>
 
@@ -29,16 +28,15 @@ export default {
 .home-page {
     width: 100%;
     padding: 32px;
+    @media (max-width: 768px) {
+        padding: 16px;
+    }  
 }
 h1 {
     color: $black;
     font-weight: 500;
 }
-h2 {
-    text-align: start;    
-    font-size: 28px;
-    font-weight: 400;
-}
+
 .header {
     border-bottom: 2px solid rgba(223, 223, 223, 0.5);
     text-align: start;
@@ -49,30 +47,11 @@ h2 {
     display: flex;
     justify-content: space-between;
     color: $white;
+    @media (min-width: 768px) and (max-width: 1024px) {
+        flex-direction: column;
+    }    
+    @media (max-width: 768px) {
+        flex-direction: column;
+    } 
 }
-.bill {
-    background-color: rgb(56, 174, 232);
-    border-radius: 5px;
-    flex: 1 0 500px;
-    height: 40vh; 
-    margin-right: 20px;  
-    padding: 32px;     
-    font-size: 24px;
-    .bill-content {
-        border-bottom: 2px solid $white;
-        padding: 32px 0;
-        text-align: start;
-    }
-}
-
-.currency {
-    background-color: rgb(245, 127, 49);
-    border-radius: 5px;    
-    flex: 3 0 700px;
-    height: 40vh; 
-    padding: 32px;     
-    font-size: 24px;
-}
-
-
 </style>
