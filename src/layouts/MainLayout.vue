@@ -15,16 +15,6 @@ export default {
         AppHeader,
         AsidePanel
     },
-    async mounted() {
-
-        await this.$store.dispatch('fetchUser')
-
-        if (Object.keys(this.$store.getters.info)) {
-            console.log('info is empty')
-            await this.$store.dispatch('fetchInfo')
-        }
-
-    } 
 }
 </script>
 

@@ -9,19 +9,28 @@
         </div>
 
         <div class="profile">
-            <router-link 
+            <router-link
+                v-if="email" 
                 class="profile-link" 
                 to="#"
                 >
-                    {{ name }}
+                    {{ email }}
             </router-link>
-            <div class="dropdown">
-                <router-link 
-                    class="dropdown-link" 
-                    to="/login"
-                    >
-                        Войти
-                </router-link>
+            <router-link
+                v-if="!email"
+                class="profile-link" 
+                to="/login"
+                >
+                    Войти
+            </router-link>
+            <div 
+                class="dropdown-btn" 
+                @click="openDropMenu"
+            ></div>
+
+            <div 
+                v-if="isDropMenuOpen == false"
+                class="dropdown">
                 <router-link 
                     class="dropdown-link" 
                     to="/register"
@@ -31,7 +40,7 @@
                 <router-link 
                     class="dropdown-link" 
                     to="#"
-                    @click="logoutHandler"
+                    @click="logOutHandler()"
                     >
                     Выйти
                 </router-link>
@@ -41,25 +50,40 @@
 </template>
 
 <script>
-import date from '@/mixins/date.mixin.js';
+import { computed } from 'vue'
+import { ref } from 'vue'
+import { onBeforeMount } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default {
     name: 'AppHeader',
-    mixins: [date],
-    computed: {
-        name() {
-            return this.$store.getters.info.name
+    setup() {
+        const date = 'time'
+        const store = useStore();
+        const router = useRouter();
+        let isDropMenuOpen = ref(false);        
+
+        const email = computed(() => {
+            return store.getters.user ? store.getters.user.email : ''
+        });
+        const openDropMenu = () =>  isDropMenuOpen.value = !isDropMenuOpen.value;       
+        const logOutHandler = () => store.dispatch('logout');
+        const goTo = (path) => router.push(path);
+
+        onBeforeMount(() => {
+            store.dispatch('fetchUser')
+        });
+
+        return {
+            isDropMenuOpen,
+            date,
+            email,
+            logOutHandler,
+            goTo,
+            openDropMenu
         }
-    },
-    methods: {
-        toggleAside() {
-            this.$store.commit('TOGGLE_ASIDE')
-        },
-        logoutHandler() {
-            this.$store.dispatch('logout');
-        },
-    },
-   
+    },  
 }
 </script>
 
@@ -113,12 +137,13 @@ export default {
     display: flex;
 }
 .dropdown {
-    border: 2px solid red;
+    background-color: rgb(241, 178, 122);
+    box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.3);    
     position: absolute;
     right: 0;
     width: 200px;
-    height: 90px;
-    bottom: -90px;
+    height: 60px;
+    bottom: -60px;
     display: flex;
     flex-direction: column;
 }
@@ -129,7 +154,8 @@ export default {
         background-color: rgb(184, 184, 184);
     }
 }
-.profile-link {
+.dropdown-btn {
+    cursor: pointer;
     &:after {
         display: inline-block;
         content: '';

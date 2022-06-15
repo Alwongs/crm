@@ -27,7 +27,13 @@ export default {
 
 .home-page {
     width: 100%;
-    padding: 32px;
+    padding: 64px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        padding: 32px;
+    }     
+    @media (min-width: 768px) and (max-width: 1024px) {
+        padding: 16px;
+    }      
     @media (max-width: 768px) {
         padding: 16px;
     }  
@@ -47,7 +53,9 @@ h1 {
     display: flex;
     justify-content: space-between;
     color: $white;
+    //padding: 32px;   
     @media (min-width: 768px) and (max-width: 1024px) {
+        padding: 16px;
         flex-direction: column;
     }    
     @media (max-width: 768px) {

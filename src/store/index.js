@@ -1,12 +1,8 @@
 import { createStore } from 'vuex'
-import auth from './modules/auth'
-import info from './modules/info'
-import helper from './modules/helper'
+import user from '@/store/modules/user'
 
 export default createStore({
     modules: {
-        auth,
-        info,
-        helper
-    }
-})
+        user,
+    },
+});

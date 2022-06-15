@@ -15,7 +15,7 @@ export default {
 .currency {
     background-color: rgb(245, 127, 49);
     border-radius: 5px;    
-    flex: 3 0 650px;
+    flex: 3 0 600px;
     height: 40vh; 
     padding: 32px;     
     font-size: 24px;

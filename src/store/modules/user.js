@@ -9,7 +9,7 @@ import {
 
 export default {
     getters: {
-        getUser(state) {
+        user(state) {
             return state.user
         }
     },
@@ -45,17 +45,17 @@ export default {
             router.push('/')
         },
 
-        async register({commit, dispatch}, details) {
+        async register({commit}, details) {
             const { name, email, password } = details;
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
 
-                const db = getDatabase();
-                const uid = await dispatch('getUid');
-                await set(ref(db, 'users/' + uid + '/info'), {
+                const db = getDatabase();                
+                const userId = auth.currentUser.uid;
+                set(ref(db, 'users/' + userId + '/info'), {
                     name: name,
                     bill: 10000
-                })
+                });
 
             } catch (error) {
 
@@ -80,16 +80,11 @@ export default {
             router.push('/')
         },
 
-        getUid() {
-            const user = auth.currentUser;
-            return user ? user.uid : null;
-        },
-
         async logout({commit}) {
-            await signOut(auth);
-            commit('CLEAR_INFO')
+            console.log('here')
+            await signOut(auth)
             commit('CLEAR_USER')
-            router.push('/login')
+            router.push('/')
         },
 
         fetchUser ({ commit }) {
