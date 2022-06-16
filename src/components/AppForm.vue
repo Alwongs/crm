@@ -9,7 +9,7 @@
         >
             <div 
                 v-if="title == 'Регистрация'" 
-                class="input-block name"
+                class="input-block"
             >
                 <label for="nameRegiter">
                     name:
@@ -21,7 +21,7 @@
                 >                                         
             </div>
 
-            <div class="input-block email">
+            <div class="input-block">
                 <label for="email">
                     email:
                 </label>
@@ -32,7 +32,7 @@
                 >                                         
             </div>
 
-            <div class="input-block password">
+            <div class="input-block">
                 <label for="password">
                     password:
                 </label>
@@ -95,6 +95,31 @@ h1 {
     font-size: 28px;
     color: $black;
     margin-bottom: 32px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        margin-bottom: 16px; 
+    }
+    @media (min-width: 768px) and (max-width: 1024px) {
+        margin-bottom: 16px;        
+    }
+    @media (max-width: 768px) {      
+        margin-bottom: 16px;        
+    }
+}
+input {
+    outline: 0;        
+    align-self: left;
+    width: 100%; 
+    border: 0;    
+    font-size: 18px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        font-size: 14px; 
+    }
+    @media (min-width: 768px) and (max-width: 1024px) {
+        font-size: 14px;        
+    }
+    @media (max-width: 768px) {      
+        font-size: 14px;         
+    }
 }
 .modal-login {
     background-color: #fff;
@@ -106,6 +131,18 @@ h1 {
     transform: translate(-50%, -50%);
     width: 500px;
     padding: 24px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        width: 400px;
+        padding: 16px;        
+    }
+    @media (min-width: 768px) and (max-width: 1024px) {
+        width: 400px;
+        padding: 16px;         
+    }
+    @media (max-width: 768px) {      
+        width: 100%;
+        border-radius: 0;        
+    }
 }
 .input-block {
     position: relative;
@@ -114,17 +151,20 @@ h1 {
     margin-bottom: 32px;
     text-align: end;
     border-bottom: 1px solid grey; 
+    padding-bottom: 5px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        margin-bottom: 16px; 
+    }
+    @media (min-width: 768px) and (max-width: 1024px) {
+        margin-bottom: 16px;        
+    }
+    @media (max-width: 768px) {      
+        margin-bottom: 16px;        
+    }    
     label {
         font-size: 13px;
         color: $grey;
-        margin-right: 8px;
-    }
-    input {
-        outline: 0;        
-        align-self: left;
-        height: 24px;
-        width: 250px; 
-        border: 0;    
+        margin-right: 16px;
     }
     .error {
         position: absolute;
@@ -139,7 +179,6 @@ h1 {
         border-color: red;
     }      
 }
-
 .btn-block {
     padding-top: 8px;
     text-align: end;
@@ -151,8 +190,7 @@ h1 {
         background-color: rgb(39, 158, 255);
         box-shadow: 1px 1px 3px 0.5px rgba(0, 0, 0, 0.2);
         border: 0;
-        border-radius: 4px;
-        //padding: 8px 16px;      
+        border-radius: 4px;     
     }
 }
 .footer-message {

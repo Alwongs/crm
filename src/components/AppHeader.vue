@@ -29,7 +29,7 @@
             ></div>
 
             <div 
-                v-if="isDropMenuOpen == false"
+                v-if="isDropMenuOpen"
                 class="dropdown">
                 <router-link 
                     class="dropdown-link" 
