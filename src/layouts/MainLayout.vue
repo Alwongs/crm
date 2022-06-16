@@ -15,6 +15,7 @@ export default {
         AppHeader,
         AsidePanel
     },
+
 }
 </script>
 

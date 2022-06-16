@@ -81,10 +81,10 @@ export default {
         },
 
         async logout({commit}) {
-            console.log('here')
-            await signOut(auth)
-            commit('CLEAR_USER')
-            router.push('/')
+            await signOut(auth);
+            commit('CLEAR_USER');
+            commit('CLEAR_INFO');
+            router.push('/');
         },
 
         fetchUser ({ commit }) {
@@ -99,6 +99,7 @@ export default {
                     }
                 }
             })
-        }
+        },
+
     }
 }

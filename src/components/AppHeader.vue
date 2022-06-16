@@ -10,14 +10,14 @@
 
         <div class="profile">
             <router-link
-                v-if="email" 
+                v-if="name" 
                 class="profile-link" 
                 to="#"
                 >
-                    {{ email }}
+                    {{ name }}
             </router-link>
             <router-link
-                v-if="!email"
+                v-if="!name"
                 class="profile-link" 
                 to="/login"
                 >
@@ -55,6 +55,7 @@ import { ref } from 'vue'
 import { onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default {
     name: 'AppHeader',
@@ -64,21 +65,29 @@ export default {
         const router = useRouter();
         let isDropMenuOpen = ref(false);        
 
-        const email = computed(() => {
-            return store.getters.user ? store.getters.user.email : ''
+        const name = computed(() => {
+            return store.getters.info ? store.getters.info.name : ''
         });
         const openDropMenu = () =>  isDropMenuOpen.value = !isDropMenuOpen.value;       
         const logOutHandler = () => store.dispatch('logout');
         const goTo = (path) => router.push(path);
 
-        onBeforeMount(() => {
-            store.dispatch('fetchUser')
+        onBeforeMount(async ()  => {
+            await store.dispatch('fetchUser');
+            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    const uid = user.uid;
+                    console.log(uid)
+                    store.dispatch('fetchInfo', uid)
+                }
+            });
         });
 
         return {
             isDropMenuOpen,
             date,
-            email,
+            name,
             logOutHandler,
             goTo,
             openDropMenu
