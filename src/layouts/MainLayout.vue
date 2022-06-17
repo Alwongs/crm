@@ -7,6 +7,9 @@
 </template>
 
 <script>
+import { onBeforeMount } from 'vue'
+import { useStore } from 'vuex'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import AppHeader from '../components/AppHeader.vue'
 import AsidePanel from '../components/AsidePanel.vue'
 
@@ -15,7 +18,20 @@ export default {
         AppHeader,
         AsidePanel
     },
+    setup() {
+        const store = useStore(); 
 
+        onBeforeMount(async ()  => {
+            await store.dispatch('fetchUser');
+            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    const uid = user.uid;
+                    store.dispatch('fetchInfo', uid)
+                }
+            });
+        });
+    }, 
 }
 </script>
 

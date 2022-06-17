@@ -29,13 +29,13 @@ export default {
     width: 100%;
     padding: 64px;
     @media (min-width: 1024px) and (max-width: 1440px) {
-        padding: 32px;
+        padding: 0px 32px;
     }     
     @media (min-width: 768px) and (max-width: 1024px) {
-        padding: 16px;
+        padding: 0px 16px;
     }      
     @media (max-width: 768px) {
-        padding: 16px;
+        padding: 0px 16px;
     }  
 }
 h1 {
@@ -48,14 +48,21 @@ h1 {
     text-align: start;
     padding: 10px;
     margin-bottom: 36px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        margin-bottom: 16px;
+    }     
+    @media (min-width: 768px) and (max-width: 1024px) {
+        margin-bottom: 16px;
+    }      
+    @media (max-width: 768px) {
+        margin-bottom: 16px;
+    } 
 }
 .content {
     display: flex;
     justify-content: space-between;
-    color: $white;
-    //padding: 32px;   
+    color: $white;  
     @media (min-width: 768px) and (max-width: 1024px) {
-        padding: 16px;
         flex-direction: column;
     }    
     @media (max-width: 768px) {

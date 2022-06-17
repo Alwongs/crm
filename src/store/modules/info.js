@@ -19,13 +19,11 @@ export default {
     actions: {
         async fetchInfo({commit}, userId) {
             const dbRef = ref(getDatabase());
-            console.log(userId);
             await get(child(dbRef, `users/${userId}/info`)).then((data) => {
                 if (data.exists()) {
-                    //console.log(data.val());
                     commit('SET_INFO', data.val())
                 } else {
-                    console.log("No data available");
+                    alert("No data available");
                 }
             }).catch((error) => {
                 console.error(error);

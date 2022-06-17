@@ -25,6 +25,7 @@
             </router-link>
             <div 
                 class="dropdown-btn" 
+                :class="{ down: !isDropMenuOpen, up: isDropMenuOpen }"
                 @click="openDropMenu"
             ></div>
 
@@ -50,38 +51,34 @@
 </template>
 
 <script>
+import { onBeforeMount } from 'vue'
+import moment from 'moment';
 import { computed } from 'vue'
 import { ref } from 'vue'
-import { onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default {
     name: 'AppHeader',
     setup() {
-        const date = 'time'
         const store = useStore();
-        const router = useRouter();
-        let isDropMenuOpen = ref(false);        
 
+        let isDropMenuOpen = ref(false);
+
+        moment.locale('ru');
+        const getTime = () => moment().format('DD MMM YYYY, HH:mm:ss');
+        let date = ref(getTime());
+        
         const name = computed(() => {
             return store.getters.info ? store.getters.info.name : ''
         });
-        const openDropMenu = () =>  isDropMenuOpen.value = !isDropMenuOpen.value;       
+        const toggleAside = () => store.commit('TOGGLE_ASIDE');
+        const openDropMenu = () => isDropMenuOpen.value = !isDropMenuOpen.value;
         const logOutHandler = () => store.dispatch('logout');
-        const goTo = (path) => router.push(path);
 
-        onBeforeMount(async ()  => {
-            await store.dispatch('fetchUser');
-            const auth = getAuth();
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    const uid = user.uid;
-                    console.log(uid)
-                    store.dispatch('fetchInfo', uid)
-                }
-            });
+        onBeforeMount(()  => {
+            setInterval(() => {
+                date.value = getTime();
+            }, 1000)
         });
 
         return {
@@ -89,8 +86,8 @@ export default {
             date,
             name,
             logOutHandler,
-            goTo,
-            openDropMenu
+            openDropMenu,
+            toggleAside
         }
     },  
 }
@@ -111,12 +108,18 @@ export default {
     padding: 0 64px;
     line-height: 64px;
     @media (min-width: 1024px) and (max-width: 1440px) {
+        height: 52px;
+        line-height: 52px;            
         padding: 0 32px;
     }
     @media (min-width: 768px) and (max-width: 1024px) {
+        height: 48px;
+        line-height: 48px;           
         padding: 0 32px;
     }
-    @media (max-width: 768px) {      
+    @media (max-width: 768px) {   
+        height: 48px;
+        line-height: 48px;    
         padding: 0 16px;
     }
 }
@@ -147,10 +150,11 @@ export default {
 }
 .dropdown {
     background-color: rgb(241, 178, 122);
-    box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.3);    
+    box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.3);  
+    border-radius: 0 0 5px 5px;  
     position: absolute;
     right: 0;
-    width: 200px;
+    width: 150px;
     height: 60px;
     bottom: -60px;
     display: flex;
@@ -158,9 +162,12 @@ export default {
 }
 .dropdown-link {
     height: 30px;
+    width: 100%;
+    text-align: start;
     line-height: 30px;
+    padding-left: 16px;
     &:hover {
-        background-color: rgb(184, 184, 184);
+        background-color: rgb(240, 213, 178);
     }
 }
 .dropdown-btn {
@@ -172,8 +179,15 @@ export default {
         height: 8px;
         width: 6px;
         background-size: contain;
+        margin-left: 32px;          
+    }
+    &.down:after {
         rotate: 90deg;
-        margin-left: 32px;
+    }
+    &.up:after {
+        rotate: 270deg;        
     }
 }
+
+
 </style>
