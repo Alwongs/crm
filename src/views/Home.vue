@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
+import { onBeforeMount } from 'vue'
 import TheBill from '@/components/home/TheBill.vue'
 import TheCurrency from '@/components/home/TheCurrency.vue'
 
@@ -20,6 +22,20 @@ export default {
         TheBill, 
         TheCurrency 
     },
+    setup() {
+        const store = useStore();
+
+        //let currency = null;
+
+        onBeforeMount(async ()  => {
+             await store.dispatch('fetchCurrency');
+            //console.log(currency);
+        });
+
+        return {
+
+        }
+    },     
 }
 </script>
 
