@@ -4,14 +4,15 @@
             <h1>Счет</h1>
         </header>
         <main class="content">
-            <the-bill />
-            <the-currency />
+            <the-bill :bill="bill"/>
+            <the-currency :currency="currency"/>
         </main>
     </div>
 </template>
 
 <script>
 import { useStore } from 'vuex'
+//import { computed } from 'vue'
 import { onBeforeMount } from 'vue'
 import TheBill from '@/components/home/TheBill.vue'
 import TheCurrency from '@/components/home/TheCurrency.vue'
@@ -25,15 +26,54 @@ export default {
     setup() {
         const store = useStore();
 
-        //let currency = null;
+        const bill = {
+            RUB: 10000,
+            USD: 123,
+            EUR: 125
+        };
+        const currency = [
+            {
+                title: 'USD',
+                value: 56.71,
+                date: '18.06.2022'
+            },
+            {
+                title: 'EUR',
+                value: 59.33,
+                date: '18.06.2022'
+            }
+        ];
+
+
+/*
+        const bill = computed(() => {
+            if (store.getters.currency.rates) {
+                return {
+                    RUB: store.getters.info.bill,
+                    USD: store.getters.info.bill * store.getters.currency.rates.USD,
+                    EUR: store.getters.info.bill * store.getters.currency.rates.EUR,
+                }
+            } else if (store.getters.currency.message) {
+                return {
+                    RUB: 'Лимит запросов исчерпан!',
+                }
+            } else {
+                return {
+                    RUB: 'Запрос курса валют отключен разработчиком! :)',
+                }
+            }
+        });
+        */               
 
         onBeforeMount(async ()  => {
-             await store.dispatch('fetchCurrency');
-            //console.log(currency);
+            if (!store.getters.currency.rates) {
+                //await store.dispatch('fetchCurrency');
+            }
         });
 
         return {
-
+            bill,
+            currency
         }
     },     
 }

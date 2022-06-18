@@ -113,13 +113,13 @@ export default {
         padding: 0 32px;
     }
     @media (min-width: 768px) and (max-width: 1024px) {
-        height: 48px;
-        line-height: 48px;           
+        height: 52px;
+        line-height: 52px;           
         padding: 0 32px;
     }
     @media (max-width: 768px) {   
-        height: 48px;
-        line-height: 48px;    
+        height: 52px;
+        line-height: 52px;    
         padding: 0 16px;
     }
 }

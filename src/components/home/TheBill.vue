@@ -1,31 +1,44 @@
 <template>
     <div class="bill">
         <h2>Счет в валюте</h2>
-        <div class="bill-content">
-            12.0 Р
-        </div>
+        <ul>
+            <li class="bill-item">
+                {{ bill.RUB }} Р
+            </li>
+            <li 
+                v-if="bill.USD"
+                class="bill-item">
+                {{ bill.USD }} $
+            </li>
+            <li 
+                v-if="bill.EUR"
+                class="bill-item">
+                {{ bill.EUR }} E
+            </li>
+        </ul>
     </div>
 </template>
 
 <script>
 export default {
-
+    props: [
+        'bill'
+    ],
 }
 </script>
 
 <style lang="scss" scoped>
 
 .bill {
-    background-color: rgb(56, 174, 232);
+    background-color: rgb(40, 153, 210);
     border-radius: 5px;
     flex: 1 0 450px;
-    height: 40vh; 
-    margin-right: 20px;  
+    margin-right: 32px;  
     padding: 32px;     
     font-size: 24px;
-    .bill-content {
+    .bill-item {
         border-bottom: 2px solid $white;
-        padding: 32px 0;
+        padding: 24px 0;
         text-align: start;
     }
     @media (min-width: 1024px) and (max-width: 1440px) {
@@ -45,5 +58,6 @@ h2 {
     text-align: start;    
     font-size: 28px;
     font-weight: 400;
+    margin-bottom: 24px;
 }
 </style>
