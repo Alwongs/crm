@@ -72,8 +72,9 @@ export default {
 }
 
 .nav-item {
-    height: 56px;
-    line-height: 56px;
+    height: 86px;
+    line-height: 86px;
+    font-size: 24px;
     text-align: start;
     padding-left: 64px;
     cursor: pointer;
@@ -89,7 +90,8 @@ export default {
     @media (min-width: 768px) and (max-width: 1024px) {
         padding-left: 32px;
     }  
-    @media (max-width: 768px) {      
+    @media (max-width: 768px) {  
+        font-size: 28px;            
         padding-left: 16px;
     }
 }

@@ -26,7 +26,7 @@
             <div 
                 class="dropdown-btn" 
                 :class="{ down: !isDropMenuOpen, up: isDropMenuOpen }"
-                @click="openDropMenu"
+                @click="toggleDropMenu"
             ></div>
 
             <div 
@@ -72,8 +72,11 @@ export default {
             return store.getters.info ? store.getters.info.name : ''
         });
         const toggleAside = () => store.commit('TOGGLE_ASIDE');
-        const openDropMenu = () => isDropMenuOpen.value = !isDropMenuOpen.value;
-        const logOutHandler = () => store.dispatch('logout');
+        const toggleDropMenu = () => isDropMenuOpen.value = !isDropMenuOpen.value;
+        const logOutHandler = () => {
+            toggleDropMenu();
+            store.dispatch('logout');
+        };
 
         onBeforeMount(()  => {
             setInterval(() => {
@@ -86,7 +89,7 @@ export default {
             date,
             name,
             logOutHandler,
-            openDropMenu,
+            toggleDropMenu,
             toggleAside
         }
     },  
@@ -107,19 +110,13 @@ export default {
     justify-content: space-between;
     padding: 0 64px;
     line-height: 64px;
-    @media (min-width: 1024px) and (max-width: 1440px) {
-        height: 52px;
-        line-height: 52px;            
+    @media (min-width: 1024px) and (max-width: 1440px) {           
         padding: 0 32px;
     }
-    @media (min-width: 768px) and (max-width: 1024px) {
-        height: 52px;
-        line-height: 52px;           
+    @media (min-width: 768px) and (max-width: 1024px) {                 
         padding: 0 32px;
     }
-    @media (max-width: 768px) {   
-        height: 52px;
-        line-height: 52px;    
+    @media (max-width: 768px) {      
         padding: 0 16px;
     }
 }
@@ -183,9 +180,13 @@ export default {
     }
     &.down:after {
         rotate: 90deg;
+        -webkit-rotate: 90deg;
+        -moz-rotate: 90deg;
     }
     &.up:after {
         rotate: 270deg;        
+        -webkit-rotate: 270deg;        
+        -moz-rotate: 270deg;        
     }
 }
 
