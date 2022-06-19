@@ -2,9 +2,9 @@
     <div class="food-page">
         <h1>Продукты</h1>
 
-        <form action="#" @submit.prevent="createFood">
-            <input v-model="data.name" type="text">
-            <input v-model="data.energy" type="text">
+        <form action="#" @submit.prevent="createFoodHandler">
+            <input v-model="name" type="text">
+            <input v-model="energy" type="text">
             <button>Сохранить</button>
         </form>
 
@@ -21,20 +21,26 @@ import { computed } from 'vue'
 */
 
 export default {
-    name: 'Home',
+    name: 'Food',
     setup() {
         const store = useStore();
 
-        const data = ref({})
+        const name = ref('');
+        const energy = ref('');
 
-        const createFood = async (data) => {
-            //console.log(data.value.name)
-            await store.dispatch('createFood', data.value)
+        const createFoodHandler = () => {
+            const data = {
+                name: name.value,
+                energy: energy.value
+            }
+            //console.log(data)
+            store.dispatch('createFood', data.name);
         }
 
         return {
-            data,
-            createFood
+            name,
+            energy,
+            createFoodHandler
         }
     },     
 }
