@@ -55,6 +55,12 @@ const router = createRouter({
             meta: {layout: 'main'},
             component: () => import('../views/Categories.vue')
         },
+        {
+            path: '/food',
+            name: 'food',
+            meta: {layout: 'main'},
+            component: () => import('../views/Food.vue')
+        },
     ]
 })
 

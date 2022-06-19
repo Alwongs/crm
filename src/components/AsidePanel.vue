@@ -30,6 +30,7 @@ export default {
                 {url: '/planning', title: 'Планирование'},
                 {url: '/record', title: 'Новая запись'},
                 {url: '/categories', title: 'Категории'},
+                {url: '/food', title: 'Продукты'},
             ]
         }
     },
