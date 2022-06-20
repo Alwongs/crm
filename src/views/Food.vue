@@ -3,8 +3,8 @@
         <h1>Продукты</h1>
 
         <form action="#" @submit.prevent="createFoodHandler">
-            <input v-model="name" type="text">
-            <input v-model="energy" type="text">
+            <input v-model="data.name" type="text">
+            <input v-model="data.energy" type="text">
             <button>Сохранить</button>
         </form>
 
@@ -25,21 +25,15 @@ export default {
     setup() {
         const store = useStore();
 
-        const name = ref('');
-        const energy = ref('');
+        const data = ref({});
 
         const createFoodHandler = () => {
-            const data = {
-                name: name.value,
-                energy: energy.value
-            }
             //console.log(data)
-            store.dispatch('createFood', data.name);
+            store.dispatch('createFood', data.value);
         }
 
         return {
-            name,
-            energy,
+            data,
             createFoodHandler
         }
     },     
