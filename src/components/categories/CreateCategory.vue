@@ -1,6 +1,7 @@
 <template>
     <div class="form-section create">
         <h2>Создать</h2>
+        <h5>{{ message }}</h5>
         <form @submit.prevent="submitHandler">
             <div class="input-block title">
                 <input 
@@ -24,18 +25,27 @@
 <script>
 import { useStore } from 'vuex'
 import { ref } from 'vue'
+//import { computed } from 'vue'
 
 export default {
     setup() {
         const store = useStore();
-
         const data = ref({});
 
+        let message = ref('test')
+
+
         const submitHandler = async () => {
-            const category = await store.dispatch('createCategory', data.value);
-            console.log(category)
+            try {
+                await store.dispatch('createCategory', data.value);
+                message.value = 'Категория создана!';
+            } catch (e) {
+                message.value = 'Ошибка' + e;
+            }
         }
+
         return {
+            message,
             data,
             submitHandler
         }
@@ -68,6 +78,10 @@ h2 {
     @media (max-width: 768px) {
         margin-bottom: 16px;
     } 
+}
+h5 {
+    background-color: rgb(54, 148, 42);
+    color: white;
 }
 .input-block {
     margin-bottom: 64px;

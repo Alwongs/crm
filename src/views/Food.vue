@@ -5,20 +5,18 @@
         </header> 
 
         <main class="content">
+            <button 
+                class="get-food"
+                @click="getFoodHandler">Get Food</button>
             <div class="list-section">
                 <ul>
-                    <li>
-                        flajfjajfajfjajdfjaljfdjlsaj j ajjf f ajfj
+                    <li 
+                        v-for="food in foods"
+                        :key="food"
+                    >
+                       {{ food.title }}: {{ food.energy }}кКл
                     </li>
-                    <li>
-                        flajfjajfajfjajdfjaljfdjlsaj j ajjf f ajfj
-                    </li>
-                    <li>
-                        flajfjajfajfjajdfjaljfdjlsaj j ajjf f ajfj
-                    </li>
-                    <li>
-                        flajfjajfajfjajdfjaljfdjlsaj j ajjf f ajfj
-                    </li>
+
                 </ul>
             </div>
 
@@ -51,9 +49,8 @@
 import { useStore } from 'vuex'
 //import { onBeforeMount } from 'vue'
 import { ref } from 'vue'
-/*
+
 import { computed } from 'vue'
-*/
 
 export default {
     name: 'Food',
@@ -62,14 +59,23 @@ export default {
 
         const data = ref({});
 
+        const foods = computed(() => {
+            return store.getters.foods;
+        })
+
         const createFoodHandler = () => {
             //console.log(data)
             store.dispatch('createFood', data.value);
         }
+        const getFoodHandler = () => {
+            store.dispatch('fetchFood');
+        }
 
         return {
             data,
-            createFoodHandler
+            foods,
+            createFoodHandler,
+            getFoodHandler
         }
     },     
 }

@@ -1,16 +1,18 @@
-import { getDatabase, set, ref } from "firebase/database";
+import { getDatabase, set, ref, child, get } from "firebase/database";
 
 export default {
 
     getters: {
-
+        foods(state) {
+            return state.foods;
+        }
     },
     state: {
-        food: {}
+        foods: {}
     },
     mutations: {
-        UPDATE_FOOD(state, food) {
-            state.food = food;
+        UPDATE_FOOD(state, foods) {
+            state.foods = foods;
         }
     },
     actions: {
@@ -26,11 +28,12 @@ export default {
             });
         },
 
-        async fetchInfo({commit}, userId) {
+        async fetchFood({commit}) {
             const dbRef = ref(getDatabase());
-            await get(child(dbRef, `users/${userId}/info`)).then((data) => {
+            await get(child(dbRef, `food`)).then((data) => {
                 if (data.exists()) {
-                    commit('SET_INFO', data.val())
+                    commit('UPDATE_FOOD', data.val())
+                    console.log(data.val())
                 } else {
                     alert("No data available");
                 }

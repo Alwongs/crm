@@ -6,7 +6,7 @@ export default {
 
     },
     state: {
-        error: ''
+
     },
     mutations: {
         SET_ERROR(state, payload) {
@@ -17,14 +17,12 @@ export default {
         async createCategory({commit, getters}, {title, limit}) {
             try {
                 const uid = getters.user.uid;
+                const categoryId = Date.now();
                 const db = getDatabase();                
 
-                await set(ref(db, `users/${uid}/categories`), {
+                await set(ref(db, `users/${uid}/categories/${categoryId}`), {
                     title,
                     limit
-                })
-                .then((res) => {
-                    console.log(res);
                 })  
 
                 //return {title, limit, id: category.key}              
