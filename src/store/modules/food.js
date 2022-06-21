@@ -14,16 +14,29 @@ export default {
         }
     },
     actions: {
-        async createFood( {commit}, data ) {
+        async createFood( _, {title, energy} ) {
 
-            const db = getDatabase();                
+            const db = getDatabase();    
+            
+            const foodId = Date.now();
 
-            const res = await set(ref(db, 'foods/123/info'), {
-                name: data.name,
-                energy: data.energy
+            await set(ref(db, `food/${foodId}`), {
+                title,
+                energy
             });
-            console.log(res)
-            commit('UPDATE_FOOD', res)
+        },
+
+        async fetchInfo({commit}, userId) {
+            const dbRef = ref(getDatabase());
+            await get(child(dbRef, `users/${userId}/info`)).then((data) => {
+                if (data.exists()) {
+                    commit('SET_INFO', data.val())
+                } else {
+                    alert("No data available");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
         }
     }
 }

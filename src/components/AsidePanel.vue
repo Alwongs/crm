@@ -51,10 +51,10 @@ export default {
     height: calc(100vh - 64px);
     box-shadow: 2px 0 3px 1px rgba(0, 0, 0, 0.1);
     @media (min-width: 1024px) and (max-width: 1440px) {
-        min-width: 250px;
+        min-width: 230px;
     }
     @media (min-width: 768px) and (max-width: 1024px) {
-        min-width: 250px;
+        min-width: 230px;
     }    
     @media (max-width: 768px) {
         position: absolute;
@@ -69,9 +69,7 @@ export default {
             transform: translateX(0%);
         } 
     }   
-
 }
-
 .nav-item {
     height: 86px;
     line-height: 86px;
@@ -86,13 +84,21 @@ export default {
         background-color: rgb(255, 239, 227);
     }
     @media (min-width: 1024px) and (max-width: 1440px) {
+        height: 56px;  
+        line-height: 56px;
+        font-size: 18px; 
         padding-left: 32px;
     }
     @media (min-width: 768px) and (max-width: 1024px) {
+        height: 56px;  
+        line-height: 56px;
+        font-size: 18px;          
         padding-left: 32px;
     }  
     @media (max-width: 768px) {  
-        font-size: 28px;            
+        height: 62px;  
+        line-height: 62px;
+        font-size: 26px;             
         padding-left: 16px;
     }
 }

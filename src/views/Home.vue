@@ -88,7 +88,7 @@ export default {
         padding: 0px 32px;
     }     
     @media (min-width: 768px) and (max-width: 1024px) {
-        padding: 0px 16px;
+        padding: 0px 32px;
     }      
     @media (max-width: 768px) {
         padding: 0px 16px;

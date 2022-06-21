@@ -31,7 +31,7 @@ export default {
         padding: 0px 32px;
     }     
     @media (min-width: 768px) and (max-width: 1024px) {
-        padding: 0px 16px;
+        padding: 0px 32px;
     }      
     @media (max-width: 768px) {
         padding: 0px 16px;
@@ -59,10 +59,7 @@ h1 {
 }
 .content {
     display: flex;
-    justify-content: space-between;
-    @media (min-width: 768px) and (max-width: 1024px) {
-        flex-direction: column;
-    }    
+    justify-content: space-between;  
     @media (max-width: 768px) {
         flex-direction: column;
     } 

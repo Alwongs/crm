@@ -2,14 +2,14 @@
     <div class="form-section create">
         <h2>Создать</h2>
         <form @submit.prevent="submitHandler">
-            <div class="title-input">
+            <div class="input-block title">
                 <input 
                     v-model="data.title" 
                     type="text" 
                     placeholder="Название"
                 >
             </div>
-            <div class="limit-input">
+            <div class="input-block limit">
                 <input 
                     v-model.number="data.limit" 
                     type="text" 
@@ -23,11 +23,7 @@
 
 <script>
 import { useStore } from 'vuex'
-//import { onBeforeMount } from 'vue'
 import { ref } from 'vue'
-/*
-import { computed } from 'vue'
-*/
 
 export default {
     setup() {
@@ -39,7 +35,6 @@ export default {
             const category = await store.dispatch('createCategory', data.value);
             console.log(category)
         }
-
         return {
             data,
             submitHandler
@@ -51,16 +46,40 @@ export default {
 <style lang="scss" scoped>
 
 .form-section {
-    width: 48%;
-    :not(:last-child) input {
-        margin-bottom: 64px; 
-    }    
+    width: 45%;
+    @media (max-width: 768px) {
+        width: 100%;        
+        margin-bottom: 64px;
+    } 
 }
 h2 {
     color: $black;
     font-weight: 500;    
     font-size: 30px;
     margin-bottom: 64px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        font-size: 26px;
+        margin-bottom: 32px;
+    }     
+    @media (min-width: 768px) and (max-width: 1024px) {
+        font-size: 24px;
+        margin-bottom: 32px;
+    }      
+    @media (max-width: 768px) {
+        margin-bottom: 16px;
+    } 
+}
+.input-block {
+    margin-bottom: 64px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        margin-bottom: 32px;
+    }     
+    @media (min-width: 768px) and (max-width: 1024px) {
+        margin-bottom: 32px;
+    }      
+    @media (max-width: 768px) {
+        margin-bottom: 16px;
+    } 
 }
 input {
     width: 100%;
@@ -68,6 +87,12 @@ input {
     border: none;
     border-bottom: 1px solid grey;
     padding-bottom: 10px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        font-size: 18px;
+    }     
+    @media (min-width: 768px) and (max-width: 1024px) {
+        font-size: 16px;
+    }          
 }
 button {
     background-color: rgb(103, 175, 144);
