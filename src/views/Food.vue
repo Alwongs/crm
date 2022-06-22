@@ -7,7 +7,10 @@
         <main class="content">
             <button 
                 class="get-food"
-                @click="getFoodHandler">Get Food</button>
+                @click="getFoodHandler"
+            >
+                Get Food
+            </button>
             <div class="list-section">
                 <ul>
                     <li 
