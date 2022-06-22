@@ -5,20 +5,40 @@
         </header>
         <main class="content">
             <create-category />
-            <edit-category />
+            <edit-category :categories="categories" />
         </main>
+        <footer class="footer">
+            <button @click.prevent="getCategoriesHandler">Get List</button>
+        </footer>
     </div>
 </template>
 
 <script>
 import CreateCategory from '../components/categories/CreateCategory.vue'
 import EditCategory from '../components/categories/EditCategory.vue'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+
 export default {
     components: { 
         CreateCategory,
         EditCategory
     },
+    setup() {
+        const store = useStore();
+        const categories = computed(() => {
+            return store.getters.categories;
+        })
 
+        const getCategoriesHandler = () => {
+            store.dispatch('getCategories');
+        }
+
+        return {
+            categories,
+            getCategoriesHandler
+        }
+    },    
 }
 </script>
 
@@ -63,5 +83,12 @@ h1 {
     @media (max-width: 768px) {
         flex-direction: column;
     } 
+}
+.footer {
+    text-align: start;
+}
+button {
+    padding: 10px;
+    cursor: pointer;
 }
 </style>

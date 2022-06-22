@@ -3,10 +3,34 @@
         <h2>Редактировать</h2>
         <form @submit.prevent="submit">
             <div class="input-block title">
-                <input type="text" placeholder="Выберете категорию">
+                <input 
+                    v-model="title"
+                    type="text" 
+                    placeholder="Выберете категорию"
+                    @click="toggleList"
+                >
+                <ul 
+                    v-if="isListOpen"
+                    class="category-list"
+                >
+                    <li 
+                        v-for="category in categories" 
+                        :key="category.id"
+                        class="category-item"
+                        @click="selectCategory(category)"
+                    >
+                        {{ category.title }}
+                    </li>
+                </ul>
             </div>
+
+
             <div class="input-block limit">
-                <input type="text" placeholder="Лимит">
+                <input 
+                    v-model="limit"
+                    type="text" 
+                    placeholder="Лимит"
+                >
             </div>
             <button class="submit">Обновить</button>                    
         </form>                
@@ -14,8 +38,49 @@
 </template>
 
 <script>
-export default {
+import { ref } from 'vue'
 
+export default {
+    //props: ['categories'],
+    setup() {
+        let isListOpen = ref(false);
+        const title = ref('');
+        const limit = ref('');
+
+        const categories = [
+            {
+                id: 1,
+                title: 'Еда',
+                limit: 15000
+            },
+            {
+                id: 2,
+                title: 'Квартплата',
+                limit: 3000
+            },
+            {
+                id: 3,
+                title: 'Интернет',
+                limit: 400
+            },
+        ]
+
+        const selectCategory = (cat) => {
+            title.value = cat.title;
+            toggleList();
+        }
+
+        const toggleList = () => isListOpen.value = !isListOpen.value;
+
+        return {
+            title,
+            limit,
+            categories,
+            isListOpen,
+            toggleList,
+            selectCategory
+        }
+    },    
 }
 </script>
 
@@ -55,6 +120,9 @@ h2 {
     @media (max-width: 768px) {
         margin-bottom: 16px;
     } 
+    &.title {
+        position: relative;
+    }
 }
 input {
     width: 100%;
@@ -78,5 +146,25 @@ button {
     font-size: 20px;
     color: $white;
     cursor: pointer;
+}
+.category-list {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 2px 2px 3px 3px rgba(72, 72, 72, 0.5);
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 32px;
+}
+.category-item {
+    height: 48px;
+    line-height: 48px;
+    font-size: 22px;
+    text-align: start;
+    padding-left: 32px;
+    cursor: pointer;
+    &:hover {
+        background-color: rgb(216, 216, 216);
+    }
 }
 </style>

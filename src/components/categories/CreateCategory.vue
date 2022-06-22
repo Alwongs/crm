@@ -1,7 +1,7 @@
 <template>
     <div class="form-section create">
         <h2>Создать</h2>
-        <h5>{{ message }}</h5>
+        <h4 v-if="message">{{ message }}</h4>
         <form @submit.prevent="submitHandler">
             <div class="input-block title">
                 <input 
@@ -30,15 +30,22 @@ import { ref } from 'vue'
 export default {
     setup() {
         const store = useStore();
-        const data = ref({});
+        let data = ref({});
 
-        let message = ref('test')
+        let message = ref('');
 
+        let makeNote = (note) => {
+            message.value = note;
+            setTimeout(() => {
+                message.value = '';
+            }, 5000);
+        }
 
         const submitHandler = async () => {
             try {
                 await store.dispatch('createCategory', data.value);
-                message.value = 'Категория создана!';
+                makeNote('Категория создана!');
+                data.value = {};
             } catch (e) {
                 message.value = 'Ошибка' + e;
             }
@@ -56,6 +63,7 @@ export default {
 <style lang="scss" scoped>
 
 .form-section {
+    position: relative;
     width: 45%;
     @media (max-width: 768px) {
         width: 100%;        
@@ -79,8 +87,16 @@ h2 {
         margin-bottom: 16px;
     } 
 }
-h5 {
-    background-color: rgb(54, 148, 42);
+h4 {
+    background-color: rgb(139, 193, 133);
+    border-radius: 3px;
+    position: absolute;
+    left:  0;
+    top: -32px;
+    width: 100%;
+    font-size: 18px;
+    line-height: 32px;
+    height: 32px;
     color: white;
 }
 .input-block {
