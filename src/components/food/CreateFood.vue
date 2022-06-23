@@ -9,11 +9,32 @@
                     placeholder="Название"
                 >
             </div>
-            <div class="input-block limit">
+            <div class="input-block energy">
                 <input 
                     v-model.number="data.energy" 
                     type="text" 
-                    placeholder="Лимит"
+                    placeholder="Калорийность"
+                >
+            </div>
+            <div class="input-block protein">
+                <input 
+                    v-model.number="data.protein" 
+                    type="text" 
+                    placeholder="Белки"
+                >
+            </div>
+            <div class="input-block fat">
+                <input 
+                    v-model.number="data.fat" 
+                    type="text" 
+                    placeholder="Жиры"
+                >
+            </div>
+            <div class="input-block carb">
+                <input 
+                    v-model.number="data.carb" 
+                    type="text" 
+                    placeholder="Углеводы"
                 >
             </div>
             <button class="submit">Создать</button>
@@ -65,9 +86,22 @@ h2 {
 }
 .form-section {
     background-color: rgb(131, 167, 202);
+    flex: 0 0 200px;     
     border-radius: 5px;
     width: 20%;
     padding: 16px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        flex: 0 0 300px;
+    }
+    @media (min-width: 768px) and (max-width: 1024px) {
+        margin-right: 0; 
+        margin-bottom: 8px;
+        width: 100%;
+    }
+    @media (max-width: 768px) {      
+        margin-bottom: 8px;        
+        width: 100%;
+    }
 }
 .input-block {
     margin-bottom: 64px;
@@ -82,8 +116,10 @@ h2 {
     } 
 }
 input {
+    width: 100%;
     height: 32px;
     margin-right: 32px;
+
 }
 button {
     background-color: rgb(65, 108, 172);

@@ -13,25 +13,133 @@
                 :key="food"
                 class="food-item"                
             >
-                <img :src="require('@/assets/img/png/food.png')" alt="">            
-                {{ food.title }}: {{ food.energy }}кКл
+                <div class="food-item">            
+                    <img :src="require('@/assets/img/png/food.png')" alt="">            
+                    {{ food.title }}: {{ food.energy }}кКл
+                </div>
             </li>
         </ul>
 
-
-
         <ul class="food-list">
-            <li class="food-item">
-                <img :src="require('@/assets/img/png/food.png')" alt="">
-                Банан: 500кКл
+            <li>
+                <div class="food-item">
+                    <div class="item-image">
+                        <img :src="require('@/assets/img/png/food.png')" alt="">
+                    </div>
+                    <div class="item-title">
+                        Банан:
+                    </div> 
+                    <ul class="item-nutrients"> 
+                        <li>
+                            <div class="key">
+                                Белки:
+                            </div>
+                            <div class="value">
+                                39г
+                            </div>
+                             
+                        </li>
+                        <li>
+                            <div class="key">
+                                Жиры:
+                            </div>   
+                            <div class="value">
+                                45г
+                            </div>                                                     
+                        </li>
+                        <li>
+                            <div class="key">                            
+                                Углеводы:
+                            </div>   
+                            <div class="value">
+                                12г
+                            </div>                                                     
+                        </li>
+                    </ul>                                                            
+                    <div class="item-energy"> 
+                         408 кКал
+                    </div>                                       
+                </div>
             </li>
-            <li class="food-item">
-                <img :src="require('@/assets/img/png/food.png')" alt="">
-                Хлеб: 300кКл
+            <li>
+                <div class="food-item">
+                    <div class="item-image">
+                        <img :src="require('@/assets/img/png/food.png')" alt="">
+                    </div>
+                    <div class="item-title">
+                        Банан:
+                    </div> 
+                    <ul class="item-nutrients"> 
+                        <li>
+                            <div class="key">
+                                Белки:
+                            </div>
+                            <div class="value">
+                                39г
+                            </div>
+                             
+                        </li>
+                        <li>
+                            <div class="key">
+                                Жиры:
+                            </div>   
+                            <div class="value">
+                                45г
+                            </div>                                                     
+                        </li>
+                        <li>
+                            <div class="key">                            
+                                Углеводы:
+                            </div>   
+                            <div class="value">
+                                12г
+                            </div>                                                     
+                        </li>
+                    </ul>                                                            
+                    <div class="item-energy"> 
+                         408 кКал
+                    </div>                                       
+                </div>
             </li>
-            <li class="food-item">
-                <img :src="require('@/assets/img/png/food.png')" alt="">
-                Молоко: 100кКл
+            <li>
+                <div class="food-item">
+                    <div class="item-image">
+                        <img :src="require('@/assets/img/png/food.png')" alt="">
+                    </div>
+                    <div class="item-title">
+                        Банан:
+                    </div> 
+                    <ul class="item-nutrients"> 
+                        <li>
+                            <div class="key">
+                                Белки:
+                            </div>
+                            <div class="value">
+                                39г
+                            </div>
+                             
+                        </li>
+                        <li>
+                            <div class="key">
+                                Жиры:
+                            </div>   
+                            <div class="value">
+                                45г
+                            </div>                                                     
+                        </li>
+                        <li>
+                            <div class="key">                            
+                                Углеводы:
+                            </div>   
+                            <div class="value">
+                                12г
+                            </div>                                                     
+                        </li>
+                    </ul>                                                            
+                    <div class="item-energy"> 
+                         408 кКал
+                    </div>                                       
+                </div>               
             </li>
         </ul>
     </div>  
@@ -65,9 +173,22 @@ export default {
 
 .list-section {
     background-color: rgb(236, 193, 193);
+    flex: 1 0 450px;    
     border-radius: 5px;
-    width: 70%;
+    margin-right: 32px; 
     padding: 16px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        flex: 1 1 300px;
+    }
+    @media (min-width: 768px) and (max-width: 1024px) {
+        margin-right: 0; 
+        margin-bottom: 8px;
+        width: 100%;
+    }
+    @media (max-width: 768px) {      
+        margin-bottom: 8px;        
+        width: 100%;
+    }
 }
 .food-list-header {
     text-align: start;
@@ -83,11 +204,39 @@ button {
 }
 .food-item {
     display: flex;
-    height: 86px;
-    line-height: 86px;
+    justify-content: space-between;
+    height: 64px;
+    width: 100%;
+    border-bottom: 1px solid grey;
+    cursor: pointer;
+    &:hover {
+        box-shadow: 1px 1px 1px 1px rgba(128, 128, 128, 0.5);
+    }
+}
+.item-image{   
+    height: 64px;   
 }
 img {
-    height: 86px;
-    margin-right: 32px;
+    height: 100%;
+}
+.item-title {
+    line-height: 64px;
+}
+.item-nutrients {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    flex: 0 0 120px;
+    font-size: 14px;
+    li {
+        display: flex;  
+        justify-content: flex-end;      
+    }
+    .value {
+        flex: 0 0 32px;
+    }
+}
+.item-energy {  
+    line-height: 64px;        
 }
 </style>

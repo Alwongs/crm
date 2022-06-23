@@ -130,6 +130,7 @@ input {
     border: none;
     border-bottom: 1px solid grey;
     padding-bottom: 10px;
+    outline: none;
     @media (min-width: 1024px) and (max-width: 1440px) {
         font-size: 18px;
     }     

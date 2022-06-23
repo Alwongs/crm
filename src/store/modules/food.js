@@ -16,15 +16,17 @@ export default {
         }
     },
     actions: {
-        async createFood( _, {title, energy} ) {
-
-            const db = getDatabase();    
-            
+        async createFood( _, data ) {
+            const {title, energy, protein, fat, carb} = data;    
             const foodId = Date.now();
+            const db = getDatabase();
 
             await set(ref(db, `food/${foodId}`), {
                 title,
-                energy
+                energy,
+                protein,
+                fat,
+                carb
             });
         },
 

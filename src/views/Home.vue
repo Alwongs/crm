@@ -2,6 +2,9 @@
     <div class="home-page">
         <header class="header">
             <h1>Счет</h1>
+            <button @click="updateCurrency">
+                Обновить
+            </button>
         </header>
         <main class="content">
             <the-bill :bill="bill"/>
@@ -12,8 +15,8 @@
 
 <script>
 import { useStore } from 'vuex'
-//import { computed } from 'vue'
-import { onBeforeMount } from 'vue'
+import { computed } from 'vue'
+//import { onBeforeMount } from 'vue'
 import TheBill from '@/components/home/TheBill.vue'
 import TheCurrency from '@/components/home/TheCurrency.vue'
 
@@ -25,7 +28,7 @@ export default {
     },
     setup() {
         const store = useStore();
-
+/*
         const bill = {
             RUB: 10000,
             USD: 123,
@@ -43,9 +46,9 @@ export default {
                 date: '18.06.2022'
             }
         ];
+        */  
+        const updateCurrency = async () => await store.dispatch('fetchCurrency');
 
-
-/*
         const bill = computed(() => {
             if (store.getters.currency.rates) {
                 return {
@@ -55,7 +58,9 @@ export default {
                 }
             } else if (store.getters.currency.message) {
                 return {
-                    RUB: 'Лимит запросов исчерпан!',
+                    RUB: store.getters.info.bill,                    
+                    USD: 'Лимит запросов исчерпан!',
+                    EUR: 'Лимит запросов исчерпан!',
                 }
             } else {
                 return {
@@ -63,17 +68,21 @@ export default {
                 }
             }
         });
-        */               
-
+        const currency = computed(() => {
+            return store.getters.currency.rates
+        });
+             
+/*
         onBeforeMount(async ()  => {
             if (!store.getters.currency.rates) {
                 //await store.dispatch('fetchCurrency');
             }
         });
-
+        */  
         return {
             bill,
-            currency
+            currency,
+            updateCurrency
         }
     },     
 }
@@ -100,6 +109,8 @@ h1 {
 }
 
 .header {
+    display: flex;
+    justify-content: space-between;
     border-bottom: 2px solid rgba(223, 223, 223, 0.5);
     text-align: start;
     padding: 10px;
@@ -113,6 +124,17 @@ h1 {
     @media (max-width: 768px) {
         margin-bottom: 16px;
     } 
+}
+button {
+    background-color: rgb(151, 229, 207);
+    box-shadow: 0px 0px 1px 1px rgba(128, 128, 128, 0.5);    
+    border: none;
+    border-radius: 5px;
+    width: 85px;
+    cursor: pointer;
+    &:hover {
+        background-color: rgb(142, 210, 192);        
+    }
 }
 .content {
     display: flex;
