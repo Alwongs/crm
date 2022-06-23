@@ -13,7 +13,7 @@
 <script>
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import AppForm from '@/components/AppForm.vue'
+import AppForm from '@/components/app/AppForm.vue'
 
 export default {
     components: { AppForm },    

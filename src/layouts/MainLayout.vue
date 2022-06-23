@@ -10,8 +10,8 @@
 import { onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import AppHeader from '../components/AppHeader.vue'
-import AsidePanel from '../components/AsidePanel.vue'
+import AppHeader from '../components/app/AppHeader.vue'
+import AsidePanel from '../components/app/AsidePanel.vue'
 
 export default {
     components: { 

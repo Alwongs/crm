@@ -126,7 +126,7 @@ export default {
 }
 .menu-btn {
     @media (max-width: 768px) {      
-        background-image: url('../assets/img/svg/menu_btn.svg');
+        background-image: url('../../assets/img/svg/menu_btn.svg');
         background-position: center;
         width: 32px;
         height: 32px;
@@ -172,7 +172,7 @@ export default {
     &:after {
         display: inline-block;
         content: '';
-        background-image: url('../assets/img/svg/breadcrumbs.svg');
+        background-image: url('../../assets/img/svg/breadcrumbs.svg');
         height: 8px;
         width: 6px;
         background-size: contain;

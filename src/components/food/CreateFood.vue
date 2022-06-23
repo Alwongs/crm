@@ -53,8 +53,9 @@ export default {
         const store = useStore();
         const data = ref({});
 
-        const createFoodHandler = () => {
-            store.dispatch('createFood', data.value);
+        const createFoodHandler = async () => {
+            await store.dispatch('createFood', data.value);
+            data.value = {};
         }
 
         return {
@@ -67,6 +68,25 @@ export default {
 
 <style lang="scss" scoped>
 
+.form-section {
+    background-color: rgb(131, 167, 202);
+    flex: 0 0 300px;     
+    border-radius: 5px;
+    width: 20%;
+    padding: 16px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        flex: 0 0 200px;
+    }
+    @media (min-width: 768px) and (max-width: 1024px) {
+        margin-right: 0; 
+        margin-bottom: 8px;
+        width: 100%;
+    }
+    @media (max-width: 768px) {      
+        margin-bottom: 8px;        
+        width: 100%;
+    }
+}
 h2 {
     color: $black;
     font-weight: 500;    
@@ -83,25 +103,6 @@ h2 {
     @media (max-width: 768px) {
         margin-bottom: 16px;
     } 
-}
-.form-section {
-    background-color: rgb(131, 167, 202);
-    flex: 0 0 200px;     
-    border-radius: 5px;
-    width: 20%;
-    padding: 16px;
-    @media (min-width: 1024px) and (max-width: 1440px) {
-        flex: 0 0 300px;
-    }
-    @media (min-width: 768px) and (max-width: 1024px) {
-        margin-right: 0; 
-        margin-bottom: 8px;
-        width: 100%;
-    }
-    @media (max-width: 768px) {      
-        margin-bottom: 8px;        
-        width: 100%;
-    }
 }
 .input-block {
     margin-bottom: 64px;

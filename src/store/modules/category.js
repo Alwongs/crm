@@ -20,6 +20,22 @@ export default {
         }
     },
     actions: {
+        async getCategories({commit, getters}) {
+            const dbRef = ref(getDatabase());
+            const uid = getters.user.uid;            
+            await get(child(dbRef, `users/${uid}/categories`)).then((data) => {
+                if (data.exists()) {
+                    const categories = data.val()
+                    const categoriesArray = Object.keys(categories).map(key => ({...categories[key], id: key}))
+                    commit('UPDATE_CATEGORIES', categoriesArray);
+                } else {
+                    alert("No data available");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+        },
+
         async createCategory({commit, getters}, {title, limit}) {
             try {
                 const uid = getters.user.uid;
@@ -35,20 +51,9 @@ export default {
                 throw e
             }
         },
-        async getCategories({commit, getters}) {
-            const dbRef = ref(getDatabase());
-            const uid = getters.user.uid;            
-            await get(child(dbRef, `users/${uid}/categories`)).then((data) => {
-                if (data.exists()) {
-                    const categories = data.val()
-                    const categoriesArray = Object.keys(categories).map(key => ({...categories[key], id: key}))
-                    commit('UPDATE_CATEGORIES', categoriesArray);
-                } else {
-                    alert("No data available");
-                }
-            }).catch((error) => {
-                console.error(error);
-            });
-        }
+
+        async updateCategory(_, data) {
+            console.log(data);
+        },
     }
 }

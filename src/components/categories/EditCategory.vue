@@ -1,33 +1,38 @@
 <template>
     <div class="form-section edit">
         <h2>Редактировать</h2>
+        <div class="input-block select">
+            <input 
+                v-model="data.title"
+                type="text" 
+                placeholder="Выберете категорию"
+                @click="toggleList"
+            >
+            <ul 
+                v-if="isListOpen"
+                class="category-list"
+            >
+                <li 
+                    v-for="category in categories" 
+                    :key="category.id"
+                    class="category-item"
+                    @click="selectCategory(category)"
+                >
+                    {{ category.title }}
+                </li>
+            </ul>
+        </div>        
         <form @submit.prevent="submit">
             <div class="input-block title">
                 <input 
-                    v-model="title"
+                    v-model="data.title"
                     type="text" 
-                    placeholder="Выберете категорию"
-                    @click="toggleList"
+                    placeholder="Название"
                 >
-                <ul 
-                    v-if="isListOpen"
-                    class="category-list"
-                >
-                    <li 
-                        v-for="category in categories" 
-                        :key="category.id"
-                        class="category-item"
-                        @click="selectCategory(category)"
-                    >
-                        {{ category.title }}
-                    </li>
-                </ul>
             </div>
-
-
             <div class="input-block limit">
                 <input 
-                    v-model="limit"
+                    v-model="data.limit"
                     type="text" 
                     placeholder="Лимит"
                 >
@@ -39,46 +44,31 @@
 
 <script>
 import { ref } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
-    //props: ['categories'],
+    props: ['categories'],
     setup() {
+        const store = useStore();        
         let isListOpen = ref(false);
-        const title = ref('');
-        const limit = ref('');
-
-        const categories = [
-            {
-                id: 1,
-                title: 'Еда',
-                limit: 15000
-            },
-            {
-                id: 2,
-                title: 'Квартплата',
-                limit: 3000
-            },
-            {
-                id: 3,
-                title: 'Интернет',
-                limit: 400
-            },
-        ]
-
-        const selectCategory = (cat) => {
-            title.value = cat.title;
-            toggleList();
-        }
-
         const toggleList = () => isListOpen.value = !isListOpen.value;
 
+        const data = ref({});
+        const selectCategory = (cat) => {
+            data.value.title = cat.title;
+            data.value.limit = cat.limit;
+            data.value.id = cat.id;
+            toggleList();
+        } 
+        const submit = () => {
+            store.dispatch('updateCategory', data.value)
+        }
         return {
-            title,
-            limit,
-            categories,
+            data,
             isListOpen,
             toggleList,
-            selectCategory
+            selectCategory,
+            submit,
         }
     },    
 }
@@ -120,7 +110,7 @@ h2 {
     @media (max-width: 768px) {
         margin-bottom: 16px;
     } 
-    &.title {
+    &.select {
         position: relative;
     }
 }

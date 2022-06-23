@@ -8,19 +8,59 @@
             </button>  
         </header>              
         <ul class="food-list">
-            <li 
+            <li
                 v-for="food in foods"
                 :key="food"
-                class="food-item"                
+                class="food-item"              
             >
-                <div class="food-item">            
-                    <img :src="require('@/assets/img/png/food.png')" alt="">            
-                    {{ food.title }}: {{ food.energy }}кКл
+                <div class="food-item">
+                    <div class="item-image">
+                        <img :src="require('@/assets/img/png/food.png')" alt="">
+                    </div>
+                    <div class="item-title">
+                        {{ food.title }}:
+                    </div> 
+                    <ul class="item-nutrients"> 
+                        <li>
+                            <div class="key">
+                                Белки:
+                            </div>
+                            <div class="value">
+                                {{ food.protein }}г
+                            </div>
+                             
+                        </li>
+                        <li>
+                            <div class="key">
+                                Жиры:
+                            </div>   
+                            <div class="value">
+                                {{ food.fat }}г
+                            </div>                                                     
+                        </li>
+                        <li>
+                            <div class="key">                            
+                                Углеводы:
+                            </div>   
+                            <div class="value">
+                                {{ food.carb }}г
+                            </div>                                                     
+                        </li>
+                    </ul>                                                            
+                    <div class="item-energy"> 
+                         {{ food.energy }} кКал
+                    </div>                                       
                 </div>
-            </li>
+            </li>            
         </ul>
 
-        <ul class="food-list">
+
+
+
+        <!-- test data -->
+
+        <ul class="food-list test-data">
+                    Тестовые данные:
             <li>
                 <div class="food-item">
                     <div class="item-image">
@@ -142,6 +182,7 @@
                 </div>               
             </li>
         </ul>
+
     </div>  
 </template>
 
@@ -201,6 +242,11 @@ button {
     border-radius: 4px;
     color: white;
     align-self: start;
+}
+.food-list {
+    &.test-data {
+        margin-top: 128px;
+    }
 }
 .food-item {
     display: flex;
