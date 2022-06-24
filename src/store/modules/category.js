@@ -1,4 +1,4 @@
-import { getDatabase, set, ref, child, get } from "firebase/database";
+import { getDatabase, /*set,*/ ref, child, push, get, update } from "firebase/database";
 
 export default {
 
@@ -37,23 +37,42 @@ export default {
         },
 
         async createCategory({commit, getters}, {title, limit}) {
-            try {
-                const uid = getters.user.uid;
-                const categoryId = Date.now();
-                const db = getDatabase();                
+            try {            
+                const db = getDatabase();
+                
+                const uid = getters.user.uid; 
+                const catId = push(child(ref(db), `users/${uid}/categories`)).key;
+                const category = {
+                    title: title,
+                    limit: limit,
+                };           
+                const updates = {};
+                updates[`users/${uid}/categories/${catId}`] = category;
 
-                await set(ref(db, `users/${uid}/categories/${categoryId}`), {
-                    title,
-                    limit
-                });            
-            } catch(e) {
+                return await update(ref(db), updates);
+            } catch (e) {
                 commit('SET_ERROR', e)
-                throw e
+                throw e                
             }
         },
 
-        async updateCategory(_, data) {
-            console.log(data);
-        },
+        async updateCategory({commit, getters}, {id, title, limit}) {
+            try {              
+                const db = getDatabase();
+
+                const uid = getters.user.uid;  
+                const category = {
+                    title: title,
+                    limit: limit,
+                };          
+                const updates = {};
+                updates[`users/${uid}/categories/${id}`] = category;
+
+                return update(ref(db), updates);
+            } catch (e) {
+                commit('SET_ERROR', e)
+                throw e                
+            }                
+        }        
     }
 }

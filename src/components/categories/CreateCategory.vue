@@ -25,13 +25,11 @@
 <script>
 import { useStore } from 'vuex'
 import { ref } from 'vue'
-//import { computed } from 'vue'
 
 export default {
     setup() {
         const store = useStore();
         let data = ref({});
-
         let message = ref('');
 
         let makeNote = (note) => {
@@ -40,7 +38,6 @@ export default {
                 message.value = '';
             }, 5000);
         }
-
         const submitHandler = async () => {
             try {
                 await store.dispatch('createCategory', data.value);
@@ -50,7 +47,6 @@ export default {
                 message.value = 'Ошибка' + e;
             }
         }
-
         return {
             message,
             data,

@@ -60,8 +60,8 @@ export default {
             data.value.id = cat.id;
             toggleList();
         } 
-        const submit = () => {
-            store.dispatch('updateCategory', data.value)
+        const submit = async () => {
+            await store.dispatch('updateCategory', data.value);
         }
         return {
             data,
