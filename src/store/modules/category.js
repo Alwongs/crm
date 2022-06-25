@@ -8,7 +8,7 @@ export default {
         }
     },
     state: {
-        categories: {},
+        categories: [],
         error: ''
     },
     mutations: {

@@ -1,68 +1,70 @@
 <template>
-    <div class="record-page">
+    <div class="record-page" @click="closeList">
         <header class="header">
             <h1>Новая запись</h1>
-            <button @click="getCatHandler">
+            <button @click="getCategories">
                 Обновить
             </button>
         </header>
         <main class="content">
-            <div class="input-block">
-                <input 
-                    v-model="categoryTitle"
-                    type="text" 
-                    placeholder="Выберете категорию" 
-                    class="category-select"
-                    @click="toggleList"                    
-                >
-
-                <ul 
-                    v-if="isListOpen"
-                    class="category-list"
-                >
-                    <li 
-                        v-for="category in categories" 
-                        :key="category.id"
-                        class="category-item"
-                        @click="selectCategory(category)"
+            <form action="#" @submit.prevent="createRecord">
+                <div class="input-block">
+                    <input 
+                        v-model="data.category.title "
+                        type="text" 
+                        placeholder="Выберете категорию" 
+                        class="category-select"
+                        @click="toggleList"                    
                     >
-                        {{ category.title }}
-                    </li>
-                </ul>
-            </div>
-
-            <div 
-                class="radio-block income"
-                @click="selectRadio(true)"
-            >
-                <div class="circle">
-                    <div v-if="isIncome" class="circle-selected"></div>
+                    <ul 
+                        v-if="isListOpen"
+                        class="category-list"
+                    >
+                        <li 
+                            v-for="category in categories" 
+                            :key="category.id"
+                            class="category-item"
+                            @click="selectCategory(category)"
+                        >
+                            {{ category.title }}
+                        </li>
+                    </ul>
                 </div>
-                Доход
-            </div>
-            <div 
-                class="radio-block extenses"
-                @click="selectRadio(false)"
-            >
-                <div class="circle">
-                    <div v-if="!isIncome" class="circle-selected"></div>                    
+                <div 
+                    class="radio-block income"
+                    @click="selectRadio('income')"
+                >
+                    <div class="circle">
+                        <div v-if="data.radioButton == 'income'" class="circle-selected"></div>
+                    </div>
+                    Доход
                 </div>
-                Расход
-            </div>
+                <div 
+                    class="radio-block outcome"
+                    @click="selectRadio('outcome')"
+                >
+                    <div class="circle">
+                        <div v-if="data.radioButton == 'outcome'" class="circle-selected"></div>                    
+                    </div>
+                    Расход
+                </div>
 
-            <input 
-                type="text" 
-                placeholder="Сумма" 
-                class="sum"
-            >    
-            <input 
-                type="text" 
-                placeholder="Описание" 
-                class="description"
-            >   
-            <button class="submit">
-                Создать
-            </button>
+                <input 
+                    v-model.number="data.sum"
+                    type="text" 
+                    placeholder="Сумма" 
+                    class="sum"
+                >    
+                <input 
+                    v-model="data.description"
+                    type="text" 
+                    placeholder="Описание" 
+                    class="description"
+                >   
+                <button class="submit">
+                    Создать
+                </button>
+            </form>
         </main>
     </div>      
 </template>
@@ -75,38 +77,56 @@ import { ref } from 'vue'
 export default {
     setup() {
         const store = useStore();
-        let isIncome = ref(true);
-        let isListOpen = ref(false);  
-        const toggleList = () => isListOpen.value = !isListOpen.value;         
+        let isListOpen = ref(false);
+
+        let data = ref({category: {}});
 
         const categories = computed(() => {
             return store.getters.categories;
         })
-
-        const getCatHandler = () => {
-            store.dispatch('getCategories');
+        const getCategories = async () => {
+            await store.dispatch('getCategories');
+            data.value.category = store.getters.categories[0];            
         }
-
-        const categoryTitle = ref('');
-
-
+        const toggleList = () => isListOpen.value = !isListOpen.value; 
+        const closeList = (e) => {
+            if (e.target.classList.value !== 'category-select') {
+                isListOpen.value = false;
+            }
+        }
         const selectCategory = (cat) => {
-            categoryTitle.value = cat.title
+            data.value.category = cat;
             toggleList();
         }  
-        const selectRadio = (bool) => {
-            isIncome.value = bool;
+        const selectRadio = (value) => {
+            data.value.radioButton = value;
+        }
+
+        const createRecord = async () => {
+            try {
+                await store.dispatch('createRecord', {
+                    categoryId: data.value.category.id,
+                    type: data.value.radioButton,
+                    sum: data.value.sum,
+                    description: data.value.description,
+                    date: new Date().toJSON()
+                });
+                data.value = {category: data.value.category}
+            } catch (e) {
+                console.log(e)
+            }
         }
 
         return {
-            isIncome,
-            categoryTitle,
+            data,
             isListOpen,
             categories,
             selectRadio,
             selectCategory,
             toggleList,
-            getCatHandler
+            getCategories,
+            closeList,
+            createRecord
         }
     }, 
 }
@@ -131,7 +151,6 @@ h1 {
     color: $black;
     font-weight: 500;
 }
-
 .header {
     display: flex;
     justify-content: space-between;
@@ -213,7 +232,7 @@ input {
     display: flex;
     cursor: pointer;
     margin-bottom: 16px;
-    &.extenses {
+    &.outcome {
         margin-bottom: 32px;
     }
 }

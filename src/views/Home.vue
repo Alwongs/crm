@@ -28,28 +28,19 @@ export default {
     },
     setup() {
         const store = useStore();
-/*
-        const bill = {
-            RUB: 10000,
-            USD: 123,
-            EUR: 125
-        };
-        const currency = [
-            {
-                title: 'USD',
-                value: 56.71,
-                date: '18.06.2022'
-            },
-            {
-                title: 'EUR',
-                value: 59.33,
-                date: '18.06.2022'
-            }
-        ];
-        */  
-        const updateCurrency = async () => await store.dispatch('fetchCurrency');
+ 
+        const updateCurrency = async () => {
+            alert('Запрос к курсу будет доступен в Июле')
+           // await store.dispatch('fetchCurrency');
+        }
 
         const bill = computed(() => {
+                return {
+                    RUB: store.getters.info.bill,
+                    USD: 'Запрос курса валют отключен разработчиком! :)',
+                    EUR: 'Запрос курса валют отключен разработчиком! :)',
+                }
+/*
             if (store.getters.currency.rates) {
                 return {
                     RUB: store.getters.info.bill,
@@ -67,6 +58,7 @@ export default {
                     RUB: 'Запрос курса валют отключен разработчиком! :)',
                 }
             }
+*/
         });
         const currency = computed(() => {
             return store.getters.currency.rates

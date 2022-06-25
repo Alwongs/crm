@@ -5,6 +5,7 @@ import helper from '@/store/modules/helper'
 import currency from '@/store/modules/currency'
 import food from '@/store/modules/food'
 import category from '@/store/modules/category'
+import record from '@/store/modules/record'
 
 export default createStore({
     modules: {
@@ -13,6 +14,7 @@ export default createStore({
         helper,
         currency,
         food,
-        category
+        category,
+        record
     },
 });
