@@ -104,14 +104,22 @@ export default {
 
         const createRecord = async () => {
             try {
-                await store.dispatch('createRecord', {
+                const newRecord = {
                     categoryId: data.value.category.id,
                     type: data.value.radioButton,
                     sum: data.value.sum,
                     description: data.value.description,
                     date: new Date().toJSON()
-                });
-                data.value = {category: data.value.category}
+                }
+                await store.dispatch('createRecord', newRecord);
+
+                const bill = store.getters.info.bill;
+                const newBill = newRecord.type === 'income' 
+                ? bill + +newRecord.sum 
+                : bill - +newRecord.sum;
+                await store.dispatch('updateInfo', {bill: newBill});
+
+                data.value = {category: data.value.category};                
             } catch (e) {
                 console.log(e)
             }

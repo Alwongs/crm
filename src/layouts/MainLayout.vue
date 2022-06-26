@@ -24,7 +24,7 @@ export default {
         onBeforeMount(async ()  => {
             await store.dispatch('fetchUser');
             const auth = getAuth();
-            onAuthStateChanged(auth, (user) => {
+            await onAuthStateChanged(auth, (user) => {
                 if (user) {
                     const uid = user.uid;
                     store.dispatch('fetchInfo', uid)

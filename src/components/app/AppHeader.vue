@@ -6,6 +6,9 @@
                 @click.prevent="toggleAside"
             ></div>
             <span class="date">{{ date }}</span>
+            <span class="bill">
+                Счёт: {{ $store.getters.info.bill }} руб
+            </span>
         </div>
 
         <div class="profile">
@@ -137,10 +140,12 @@ export default {
 .date {
     font-weight: 400;
     color: rgb(0, 118, 61);
+    margin-right: 32px;
     @media (max-width: 768px) {      
         display: none;
     }  
 }
+
 .profile{
     position: relative;
     display: flex;

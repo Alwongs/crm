@@ -1,13 +1,163 @@
 <template>
-    <h1>Planning</h1>
+    <div class="planning-page">
+        <header class="header">
+            <h1>Планирование</h1>
+            <h2 class="bill">
+                {{ $store.getters.info.bill }} руб
+            </h2>            
+        </header>
+        <main class="content">
+            <ul>
+                <li 
+                    v-for="cat in thisCategories" 
+                    :key="cat.title"
+                >
+                    {{ cat.title }}: 
+                    <span 
+                        class="sum"
+                        :class="[ cat.progressColor ]"
+                    >
+                        {{ cat.spend }}р из {{ cat.limit }}р
+                    </span>
+                    <div class="progress">
+                        <div 
+                            class="percent" 
+                            :class="[ cat.progressColor ]"
+                            :style="{ width: cat.progressPercent + '%' }"
+                        ></div>
+                    </div>
+                </li>
+            </ul>
+
+        </main>
+    </div>
 </template>
 
 <script>
+import { onBeforeMount } from 'vue'
+import { useStore } from 'vuex'
+import { ref } from 'vue'
+
 export default {
-    name: 'Planning',    
+    name: 'Planning', 
+    setup() {
+        const store = useStore();
+
+        let thisCategories = ref([]);
+
+        const getData = async () => {
+            await store.dispatch('getCategories');
+            await store.dispatch('getRecords');
+            const categories = store.getters.categories;
+            const records = store.getters.records;
+
+            thisCategories.value = categories.map(cat => {
+                const spend = records
+                    .filter(r => r.categoryId === cat.id)
+                    .filter(r => r.type === 'outcome')
+                    .reduce((total, record) => {
+                        return total += +record.sum;
+                    }, 0);
+                const percent = 100 * spend / cat.limit;
+                const progressPercent = percent > 100 ? 100 : percent;
+                const progressColor = percent < 60
+                    ? 'green'
+                    : percent < 100
+                        ? 'yellow'
+                        : 'red'
+                return {
+                    ...cat,
+                    progressPercent,
+                    progressColor,
+                    spend
+                }
+            });
+        }
+        onBeforeMount(()  => {
+            getData()
+        }); 
+        return {
+            thisCategories
+        }       
+    },         
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
+.planning-page {
+    width: 100%;
+    padding: 64px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        padding: 0px 32px;
+    }     
+    @media (min-width: 768px) and (max-width: 1024px) {
+        padding: 0px 32px;
+    }      
+    @media (max-width: 768px) {
+        padding: 0px 16px;
+    }  
+}
+h1 {
+    color: $black;
+    font-weight: 500;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid rgba(223, 223, 223, 0.5);
+    text-align: start;
+    padding: 10px;
+    margin-bottom: 36px;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        margin-bottom: 16px;
+    }     
+    @media (min-width: 768px) and (max-width: 1024px) {
+        margin-bottom: 16px;
+    }      
+    @media (max-width: 768px) {
+        margin-bottom: 16px;
+    } 
+}
+button {
+    background-color: rgb(151, 229, 207);
+    box-shadow: 0px 0px 1px 1px rgba(128, 128, 128, 0.5);    
+    border: none;
+    border-radius: 5px;
+    width: 85px;
+    cursor: pointer;
+    &:hover {
+        background-color: rgb(142, 210, 192);        
+    }
+}
+.content {
+    width: 50%;
+    text-align: start;
+}
+li {
+    margin-bottom: 32px;
+    .sum {
+        &.red {
+            color: red;
+        }
+    }    
+}
+.progress {
+    height: 10px;
+    width: 100%;
+    background-color: rgb(186, 255, 245);
+}
+.percent {
+    height: 100%;
+    &.yellow {
+        background-color: yellow;
+    }
+    &.green {
+        background-color: green;
+    }
+    &.red {
+        background-color: red;
+    }
+}
 </style>

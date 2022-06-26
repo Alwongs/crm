@@ -27,38 +27,53 @@ const router = createRouter({
             name: 'home',
             meta: {
                 layout: 'main',
-                requiresAuth: false
+                requiresAuth: true
             },
             component: () => import('../views/Home.vue')
         },  
         {
             path: '/history',
             name: 'history',
-            meta: {layout: 'main'},
+            meta: {
+                layout: 'main',
+                requiresAuth: false
+            },
             component: () => import('../views/History.vue')
         },  
         {
             path: '/planning',
             name: 'planning',
-            meta: {layout: 'main'},
+            meta: {
+                layout: 'main',
+                requiresAuth: true
+            },
             component: () => import('../views/Planning.vue')
         },  
         {
             path: '/record',
             name: 'record',
-            meta: {layout: 'main'},
+            meta: {
+                layout: 'main',
+                requiresAuth: true
+            },
             component: () => import('../views/Record.vue')
         },  
         {
             path: '/categories',
             name: 'categories',
-            meta: {layout: 'main'},
+            meta: {
+                layout: 'main',
+                requiresAuth: true
+            },
             component: () => import('../views/Categories.vue')
         },
         {
             path: '/food',
             name: 'food',
-            meta: {layout: 'main'},
+            meta: {
+                layout: 'main',
+                requiresAuth: true
+            }, 
             component: () => import('../views/Food.vue')
         },
     ]
