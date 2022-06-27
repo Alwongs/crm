@@ -14,13 +14,6 @@
                 :records="thisRecords"
             />
         </main>
-        <Paginate
-            :page-count="20"
-            :click-handler="PageChangeHandler"
-            :prev-text="'Prev'"
-            :next-text="'Next'"
-            :container-class="'className'">        
-        ></Paginate>
     </div>
 </template>
 
