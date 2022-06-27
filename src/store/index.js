@@ -6,6 +6,7 @@ import currency from '@/store/modules/currency'
 import food from '@/store/modules/food'
 import category from '@/store/modules/category'
 import record from '@/store/modules/record'
+import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
     modules: {
@@ -17,4 +18,5 @@ export default createStore({
         category,
         record
     },
+    plugins: [createPersistedState()]
 });

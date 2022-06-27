@@ -1,7 +1,7 @@
 <template>
     <table class="table">
         <thead>
-            <tr>
+            <tr class="table-header">
                 <th>#</th>
                 <th>Сумма</th>
                 <th>Дата</th>
@@ -11,7 +11,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(record, index) in records" :key="record.id">
+            <tr 
+                v-for="(record, index) in records" 
+                :key="record.id"
+                class="table-item"
+            >
                 <td>{{ index + 1 }}</td>
                 <td>{{ record.sum }}</td>
                 <td>{{ record.date }}</td>
@@ -53,13 +57,37 @@ export default {
         text-align: left;
     }
 }
+.table-header {
+    height: 32px;
+    th {
+        border-bottom: 1px solid grey;   
+    } 
+}
+.table-item {
+    height: 48px;
+    td {
+        border-bottom: 1px solid grey;   
+    } 
+}
 .record-type {
     color: white;
+    padding: 1px 5px;
     &.green {
         background-color: green;
     }
     &.red {
         background-color: red;
     }
+}
+button {
+    width: 85px;
+    background-color: rgb(103, 175, 144);
+    border-radius: 3px;
+    border: none;
+    box-shadow: 1px 1px 2px 1px rgba(3, 3, 3, 0.4);
+    padding: 5px 0;
+    font-size: 14px;
+    color: $white;
+    cursor: pointer;
 }
 </style>

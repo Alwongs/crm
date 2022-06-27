@@ -6,7 +6,9 @@
                 {{ $store.getters.info.bill }} руб
             </h2>            
         </header>
+
         <main class="content">
+            <app-loader />
             <history-table :records="thisRecords"/>
         </main>
     </div>
@@ -14,12 +16,16 @@
 
 <script>
 import HistoryTable from '../components/history/HistoryTable.vue'
+import AppLoader from '../components/app/AppLoader.vue'
 import { onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
 
 export default {
-  components: { HistoryTable },
+    components: { 
+        HistoryTable, 
+        AppLoader 
+    },
     name: 'History', 
     setup() {
         const store = useStore();
@@ -100,6 +106,7 @@ button {
     }
 }
 .content {
+    position: relative;
     width: 100%;
     text-align: start;
 }
