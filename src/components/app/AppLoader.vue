@@ -22,11 +22,13 @@ $red: #d62d20;
 $yellow: #ffa700;
 $white: #eee;
 
-// scaling... any units
 $width: 100px;
 
+
+.showbox {
+    padding: 5%;
+}
 .loader {
-    border: 1px solid red;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -39,7 +41,6 @@ $width: 100px;
         padding-top: 100%;
     }
 }
-
 .circular {
     animation: rotate 2s linear infinite;
     height: 100%;
@@ -52,20 +53,17 @@ $width: 100px;
     right: 0;
     margin: auto;
 }
-
 .path {
     stroke-dasharray: 1, 200;
     stroke-dashoffset: 0;
     animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
     stroke-linecap: round;
 }
-
 @keyframes rotate {
     100% {
         transform: rotate(360deg);
     }
 }
-
 @keyframes dash {
     0% {
         stroke-dasharray: 1, 200;
@@ -80,7 +78,6 @@ $width: 100px;
         stroke-dashoffset: -124px;
     }
 }
-
 @keyframes color {
     100%,
     0% {
@@ -97,17 +94,7 @@ $width: 100px;
         stroke: $yellow;
     }
 }
-
-// demo-specific
 body {
     background-color: $white;
-}
-.showbox {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 5%;
 }
 </style>

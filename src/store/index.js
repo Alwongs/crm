@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import loading from '@/store/modules/loading'
 import user from '@/store/modules/user'
 import info from '@/store/modules/info'
 import helper from '@/store/modules/helper'
@@ -10,13 +11,14 @@ import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
     modules: {
+        loading,
         user,
         info,
         helper,
         currency,
         food,
         category,
-        record
+        record,
     },
     plugins: [createPersistedState()]
 });

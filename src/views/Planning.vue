@@ -7,7 +7,8 @@
             </h2>            
         </header>
         <main class="content">
-            <ul>
+            <app-loader v-if="loading"/>
+            <ul v-else>
                 <li 
                     v-for="cat in thisCategories" 
                     :key="cat.title"
@@ -28,7 +29,6 @@
                     </div>
                 </li>
             </ul>
-
         </main>
     </div>
 </template>
@@ -36,16 +36,28 @@
 <script>
 import { onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
+import { computed } from 'vue'
 import { ref } from 'vue'
+import AppLoader from '../components/app/AppLoader.vue'
 
 export default {
+    components: { 
+        AppLoader 
+    },
     name: 'Planning', 
     setup() {
         const store = useStore();
 
+        const loading = computed(() => {
+            return store.getters.loading;
+        })           
+
         let thisCategories = ref([]);
 
+       
+
         const getData = async () => {
+            store.commit('START_LOADING');
             await store.dispatch('getCategories');
             await store.dispatch('getRecords');
             const categories = store.getters.categories;
@@ -72,11 +84,13 @@ export default {
                     spend
                 }
             });
+            store.commit('STOP_LOADING');            
         }
         onBeforeMount(()  => {
-            getData()
+            getData();
         }); 
         return {
+            loading,
             thisCategories
         }       
     },         

@@ -8,8 +8,11 @@
         </header>
 
         <main class="content">
-            <app-loader />
-            <history-table :records="thisRecords"/>
+            <app-loader v-if="loading"/>
+            <history-table 
+                v-else
+                :records="thisRecords"
+            />
         </main>
     </div>
 </template>
@@ -18,6 +21,7 @@
 import HistoryTable from '../components/history/HistoryTable.vue'
 import AppLoader from '../components/app/AppLoader.vue'
 import { onBeforeMount } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
 
@@ -30,10 +34,17 @@ export default {
     setup() {
         const store = useStore();
 
+        const loading = computed(() => {
+            return store.getters.loading;
+        })        
+
         let thisRecords = ref([]);
         let thisCategories = ref([]);
 
+
+
         onBeforeMount(async () => {
+            store.commit('START_LOADING');
             await store.dispatch('getCategories');
             await store.dispatch('getRecords');  
             const records = store.getters.records 
@@ -46,10 +57,12 @@ export default {
                     typeClass: record.type === 'income' ? 'green' : 'red',
                     typeText: record.type === 'income' ? 'Доход' : 'Расход',
                 }
-            })
+            });
+            store.commit('STOP_LOADING');            
         })
 
         return {
+            loading,
             thisCategories,
             thisRecords
         }
@@ -106,7 +119,6 @@ button {
     }
 }
 .content {
-    position: relative;
     width: 100%;
     text-align: start;
 }
