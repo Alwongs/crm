@@ -190,7 +190,8 @@ input {
         background-color: rgb(39, 158, 255);
         box-shadow: 1px 1px 3px 0.5px rgba(0, 0, 0, 0.2);
         border: 0;
-        border-radius: 4px;     
+        border-radius: 4px;   
+        cursor: pointer;  
     }
 }
 .footer-message {

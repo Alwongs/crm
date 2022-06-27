@@ -1,12 +1,5 @@
 <template>
-    <div class="list-section">
-        <header class="food-list-header">
-            <button
-                @click="getFoodHandler"
-            >
-                Get Food
-            </button>  
-        </header>              
+    <div class="list-section">             
         <ul class="food-list">
             <li
                 v-for="food in foods"
@@ -53,158 +46,31 @@
                 </div>
             </li>            
         </ul>
-
-
-
-
-        <!-- test data -->
-
-        <ul class="food-list test-data">
-                    Тестовые данные:
-            <li>
-                <div class="food-item">
-                    <div class="item-image">
-                        <img :src="require('@/assets/img/png/food.png')" alt="">
-                    </div>
-                    <div class="item-title">
-                        Банан:
-                    </div> 
-                    <ul class="item-nutrients"> 
-                        <li>
-                            <div class="key">
-                                Белки:
-                            </div>
-                            <div class="value">
-                                39г
-                            </div>
-                             
-                        </li>
-                        <li>
-                            <div class="key">
-                                Жиры:
-                            </div>   
-                            <div class="value">
-                                45г
-                            </div>                                                     
-                        </li>
-                        <li>
-                            <div class="key">                            
-                                Углеводы:
-                            </div>   
-                            <div class="value">
-                                12г
-                            </div>                                                     
-                        </li>
-                    </ul>                                                            
-                    <div class="item-energy"> 
-                         408 кКал
-                    </div>                                       
-                </div>
-            </li>
-            <li>
-                <div class="food-item">
-                    <div class="item-image">
-                        <img :src="require('@/assets/img/png/food.png')" alt="">
-                    </div>
-                    <div class="item-title">
-                        Банан:
-                    </div> 
-                    <ul class="item-nutrients"> 
-                        <li>
-                            <div class="key">
-                                Белки:
-                            </div>
-                            <div class="value">
-                                39г
-                            </div>
-                             
-                        </li>
-                        <li>
-                            <div class="key">
-                                Жиры:
-                            </div>   
-                            <div class="value">
-                                45г
-                            </div>                                                     
-                        </li>
-                        <li>
-                            <div class="key">                            
-                                Углеводы:
-                            </div>   
-                            <div class="value">
-                                12г
-                            </div>                                                     
-                        </li>
-                    </ul>                                                            
-                    <div class="item-energy"> 
-                         408 кКал
-                    </div>                                       
-                </div>
-            </li>
-            <li>
-                <div class="food-item">
-                    <div class="item-image">
-                        <img :src="require('@/assets/img/png/food.png')" alt="">
-                    </div>
-                    <div class="item-title">
-                        Банан:
-                    </div> 
-                    <ul class="item-nutrients"> 
-                        <li>
-                            <div class="key">
-                                Белки:
-                            </div>
-                            <div class="value">
-                                39г
-                            </div>
-                             
-                        </li>
-                        <li>
-                            <div class="key">
-                                Жиры:
-                            </div>   
-                            <div class="value">
-                                45г
-                            </div>                                                     
-                        </li>
-                        <li>
-                            <div class="key">                            
-                                Углеводы:
-                            </div>   
-                            <div class="value">
-                                12г
-                            </div>                                                     
-                        </li>
-                    </ul>                                                            
-                    <div class="item-energy"> 
-                         408 кКал
-                    </div>                                       
-                </div>               
-            </li>
-        </ul>
-
     </div>  
 </template>
 
 <script>
 import { useStore } from 'vuex'
 import { computed } from 'vue'
+import { onBeforeMount } from 'vue'
 
 export default {
     name: 'Food',
     setup() {
         const store = useStore();
+
         const foods = computed(() => {
             return store.getters.foods;
         })
 
-        const getFoodHandler = () => {
+        onBeforeMount(async () => {
+            store.commit('START_LOADING'); 
             store.dispatch('fetchFood');
-        }
+            store.commit('STOP_LOADING');            
+        })
 
         return {
-            foods,
-            getFoodHandler
+            foods
         }
     },     
 }
@@ -213,7 +79,7 @@ export default {
 <style lang="scss" scoped>
 
 .list-section {
-    background-color: rgb(236, 193, 193);
+    //background-color: rgb(236, 193, 193);
     flex: 1 0 450px;    
     border-radius: 5px;
     margin-right: 32px; 
@@ -231,10 +97,6 @@ export default {
         width: 100%;
     }
 }
-.food-list-header {
-    text-align: start;
-    margin-bottom: 32px;
-}
 button {
     background-color: rgb(65, 108, 172);
     width: 100px;
@@ -251,7 +113,7 @@ button {
 .food-item {
     display: flex;
     justify-content: space-between;
-    height: 64px;
+    height: 86px;
     width: 100%;
     border-bottom: 1px solid grey;
     cursor: pointer;

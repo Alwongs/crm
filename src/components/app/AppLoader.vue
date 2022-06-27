@@ -31,7 +31,7 @@ $width: 100px;
 .loader {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 30vh;
     transform: translate(-50%, -50%);    
     margin: 0 auto;
     width: $width;

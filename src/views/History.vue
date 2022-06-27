@@ -14,6 +14,13 @@
                 :records="thisRecords"
             />
         </main>
+        <Paginate
+            :page-count="20"
+            :click-handler="PageChangeHandler"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :container-class="'className'">        
+        ></Paginate>
     </div>
 </template>
 
@@ -41,7 +48,9 @@ export default {
         let thisRecords = ref([]);
         let thisCategories = ref([]);
 
+        const PageChangeHandler = () => {
 
+        }
 
         onBeforeMount(async () => {
             store.commit('START_LOADING');
@@ -62,6 +71,7 @@ export default {
         })
 
         return {
+            PageChangeHandler,
             loading,
             thisCategories,
             thisRecords

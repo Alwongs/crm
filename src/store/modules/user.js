@@ -26,6 +26,7 @@ export default {
     },
     actions: {
         async login({commit}, details) {
+            commit('START_LOADING');
             const { email, password } = details;
             try {
                 await signInWithEmailAndPassword(auth, email, password)
@@ -42,6 +43,7 @@ export default {
                 return               
             }
             commit('SET_USER', auth.currentUser)
+            commit('STOP_LOADING');            
             router.push('/')
         },
 
