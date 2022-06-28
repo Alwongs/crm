@@ -148,6 +148,15 @@ button {
 .content {
     width: 50%;
     text-align: start;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        width: 70%;
+    }     
+    @media (min-width: 768px) and (max-width: 1024px) {
+        width: 100%;
+    }      
+    @media (max-width: 768px) {
+        width: 100%;
+    }     
 }
 li {
     margin-bottom: 32px;

@@ -2,12 +2,11 @@
     <div class="record-page" @click="closeList">
         <header class="header">
             <h1>Новая запись</h1>
-            <button @click="getCategories">
-                Обновить
-            </button>
         </header>
         <main class="content">
-            <form action="#" @submit.prevent="createRecord">
+            <app-loader v-if="loading"/>
+
+            <form v-else action="#" @submit.prevent="createRecord">
                 <div class="input-block">
                     <input 
                         v-model="data.category.title "
@@ -70,24 +69,30 @@
 </template>
 
 <script>
+import AppLoader from '@/components/app/AppLoader'
+import { onBeforeMount } from 'vue'
+import moment from 'moment';
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 import { ref } from 'vue'
 
 export default {
+    name: 'Record',
+    components: { AppLoader },
     setup() {
         const store = useStore();
         let isListOpen = ref(false);
 
         let data = ref({category: {}});
 
+        const loading = computed(() => {
+            return store.getters.loading;
+        })         
+
         const categories = computed(() => {
             return store.getters.categories;
         })
-        const getCategories = async () => {
-            await store.dispatch('getCategories');
-            data.value.category = store.getters.categories[0];            
-        }
+
         const toggleList = () => isListOpen.value = !isListOpen.value; 
         const closeList = (e) => {
             if (e.target.classList.value !== 'category-select') {
@@ -109,7 +114,7 @@ export default {
                     type: data.value.radioButton,
                     sum: data.value.sum,
                     description: data.value.description,
-                    date: new Date().toJSON()
+                    date: moment().toJSON()
                 }
                 await store.dispatch('createRecord', newRecord);
 
@@ -125,14 +130,21 @@ export default {
             }
         }
 
+        onBeforeMount(async () => {
+            store.commit('START_LOADING');
+            await store.dispatch('getCategories');
+            data.value.category = store.getters.categories[0];   
+            store.commit('STOP_LOADING');            
+        })          
+
         return {
+            loading,
             data,
             isListOpen,
             categories,
             selectRadio,
             selectCategory,
             toggleList,
-            getCategories,
             closeList,
             createRecord
         }
@@ -189,11 +201,16 @@ button {
 }
 .content { 
     text-align: start;
-    width: 30%;
+    width: 40%;
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        width: 70%;
+    }     
     @media (min-width: 768px) and (max-width: 1024px) {
+        width: 90%;        
         flex-direction: column;
     }    
     @media (max-width: 768px) {
+        width: 100%;          
         flex-direction: column;
     } 
 }
@@ -231,6 +248,8 @@ input {
     font-size: 22px;
     text-align: start;
     padding-left: 32px;
+    white-space: nowrap;  
+    overflow-x:hidden;
     cursor: pointer;
     &:hover {
         background-color: rgb(216, 216, 216);

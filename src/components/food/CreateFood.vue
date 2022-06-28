@@ -37,7 +37,7 @@
                     placeholder="Углеводы"
                 >
             </div>
-            <button class="submit">Создать</button>
+            <button class="submit">Сохранить</button>
         </form>
     </div>  
 </template>
@@ -69,13 +69,14 @@ export default {
 <style lang="scss" scoped>
 
 .form-section {
-    background-color: rgb(131, 167, 202);
-    flex: 0 0 300px;     
+    flex: 0 0 300px;
+    background-color: rgb(78, 158, 123);
+    box-shadow: 0px 1px 2px 1px rgba(3, 3, 3, 0.4);    
     border-radius: 5px;
-    width: 20%;
+    width: 300px;
     padding: 16px;
     @media (min-width: 1024px) and (max-width: 1440px) {
-        flex: 0 0 200px;
+        //flex: 0 0 200px;
     }
     @media (min-width: 768px) and (max-width: 1024px) {
         margin-right: 0; 
@@ -88,7 +89,7 @@ export default {
     }
 }
 h2 {
-    color: $black;
+    color: $white;
     font-weight: 500;    
     font-size: 24px;
     margin-bottom: 64px;
@@ -105,12 +106,12 @@ h2 {
     } 
 }
 .input-block {
-    margin-bottom: 64px;
+    margin-bottom: 16px;
     @media (min-width: 1024px) and (max-width: 1440px) {
-        margin-bottom: 32px;
+        margin-bottom: 16px;
     }     
     @media (min-width: 768px) and (max-width: 1024px) {
-        margin-bottom: 32px;
+        margin-bottom: 16px;
     }      
     @media (max-width: 768px) {
         margin-bottom: 16px;

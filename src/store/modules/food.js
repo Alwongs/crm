@@ -35,7 +35,6 @@ export default {
             await get(child(dbRef, `food`)).then((data) => {
                 if (data.exists()) {
                     commit('UPDATE_FOOD', data.val())
-                    console.log(data.val())
                 } else {
                     alert("No data available");
                 }

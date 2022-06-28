@@ -7,15 +7,13 @@
             <create-category />
             <edit-category :categories="categories" />
         </main>
-        <footer class="footer">
-            <button @click.prevent="getCategoriesHandler">Get List</button>
-        </footer>
     </div>
 </template>
 
 <script>
 import CreateCategory from '../components/categories/CreateCategory.vue'
 import EditCategory from '../components/categories/EditCategory.vue'
+import { onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 
@@ -30,13 +28,14 @@ export default {
             return store.getters.categories;
         })
 
-        const getCategoriesHandler = () => {
+        onBeforeMount(async () => {
+            store.commit('START_LOADING');
             store.dispatch('getCategories');
-        }
+            store.commit('STOP_LOADING');            
+        })        
 
         return {
             categories,
-            getCategoriesHandler
         }
     },    
 }
@@ -83,9 +82,6 @@ h1 {
     @media (max-width: 768px) {
         flex-direction: column;
     } 
-}
-.footer {
-    text-align: start;
 }
 button {
     padding: 10px;

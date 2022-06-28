@@ -6,9 +6,6 @@
                 @click.prevent="toggleAside"
             ></div>
             <span class="date">{{ date }}</span>
-            <span class="bill">
-                Счёт: {{ $store.getters.info.bill }} руб
-            </span>
         </div>
 
         <div class="profile">
@@ -113,10 +110,14 @@ export default {
     justify-content: space-between;
     padding: 0 64px;
     line-height: 64px;
-    @media (min-width: 1024px) and (max-width: 1440px) {           
+    @media (min-width: 1024px) and (max-width: 1440px) { 
+        height: 48px; 
+        line-height: 48px;                 
         padding: 0 32px;
     }
-    @media (min-width: 768px) and (max-width: 1024px) {                 
+    @media (min-width: 768px) and (max-width: 1024px) {  
+        height: 48px; 
+        line-height: 48px;                        
         padding: 0 32px;
     }
     @media (max-width: 768px) {      
