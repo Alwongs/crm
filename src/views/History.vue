@@ -14,6 +14,13 @@
                 :records="thisRecords"
             />
         </main>
+        <paginate
+            :page-count="20"
+            :click-handler="setupPagination"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :container-class="'className'"
+        ></paginate>
     </div>
 </template>
 
@@ -24,13 +31,15 @@ import { onBeforeMount } from 'vue'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
+import paginationMixin from '@/mixins/pagination.mixin';
 
 export default {
     components: { 
         HistoryTable, 
         AppLoader 
     },
-    name: 'History', 
+    name: 'History',
+    mixins: [ paginationMixin ],     
     setup() {
         const store = useStore();
 
@@ -40,10 +49,6 @@ export default {
 
         let thisRecords = ref([]);
         let thisCategories = ref([]);
-
-        const PageChangeHandler = () => {
-
-        }
 
         onBeforeMount(async () => {
             store.commit('START_LOADING');
@@ -64,7 +69,7 @@ export default {
         })
 
         return {
-            PageChangeHandler,
+            setupPagination,
             loading,
             thisCategories,
             thisRecords
