@@ -18,14 +18,17 @@
                         class="sum"
                         :class="[ cat.progressColor ]"
                     >
-                        {{ cat.spend }}р из {{ cat.limit }}р
+                        {{ cat.spend }}р
                     </span>
-                    <div class="progress">
-                        <div 
-                            class="percent" 
-                            :class="[ cat.progressColor ]"
-                            :style="{ width: cat.progressPercent + '%' }"
-                        ></div>
+                    <div class="graf">
+                        <div class="progress">
+                            <div 
+                                class="percent" 
+                                :class="[ cat.progressColor ]"
+                                :style="{ width: cat.progressPercent + '%' }"
+                            ></div>
+                        </div>
+                        {{ cat.limit }}р
                     </div>
                 </li>
             </ul>
@@ -166,10 +169,16 @@ li {
         }
     }    
 }
-.progress {
-    height: 10px;
+.graf {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
+}
+.progress {
+    flex: 1 1 auto;
+    height: 20px;
     background-color: rgb(186, 255, 245);
+    margin-right: 10px;
 }
 .percent {
     height: 100%;

@@ -79,10 +79,8 @@ export default {
 <style lang="scss" scoped>
 
 .list-section {
-    //background-color: rgb(236, 193, 193);
     flex: 1 0 450px;    
     border-radius: 5px;
-    margin-right: 32px; 
     padding: 16px;
     @media (min-width: 1024px) and (max-width: 1440px) {
         flex: 1 1 300px;
@@ -113,22 +111,24 @@ button {
 .food-item {
     display: flex;
     justify-content: space-between;
-    height: 86px;
     width: 100%;
     border-bottom: 1px solid grey;
     cursor: pointer;
     &:hover {
-        box-shadow: 1px 1px 1px 1px rgba(128, 128, 128, 0.5);
+        background-color: rgb(203, 243, 217);
     }
 }
-.item-image{   
-    height: 64px;   
+.item-image{  
+
+    flex: 0 0 50px;   
 }
 img {
-    height: 100%;
+    height: 54px;
 }
 .item-title {
-    line-height: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
 }
 .item-nutrients {
     display: flex;
@@ -145,6 +145,8 @@ img {
     }
 }
 .item-energy {  
-    line-height: 64px;        
+    display: flex;
+    flex-direction: column;
+    justify-content: center;       
 }
 </style>

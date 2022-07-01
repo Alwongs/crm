@@ -51,10 +51,10 @@ export default {
     height: calc(100vh - 64px);
     box-shadow: 2px 0 3px 1px rgba(0, 0, 0, 0.1);
     @media (min-width: 1024px) and (max-width: 1440px) {
-        min-width: 230px;
+        min-width: 200px;
     }
     @media (min-width: 768px) and (max-width: 1024px) {
-        min-width: 230px;
+        min-width: 200px;
     }    
     @media (max-width: 768px) {
         position: absolute;
