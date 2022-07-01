@@ -7,7 +7,8 @@
 </template>
 
 <script>
-import { onBeforeMount } from 'vue'
+//import { onBeforeMount } from 'vue'
+import { onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import AppHeader from '../components/app/AppHeader.vue'
@@ -21,10 +22,10 @@ export default {
     setup() {
         const store = useStore(); 
 
-        onBeforeMount(async ()  => {
+        onMounted(async ()  => {
             await store.dispatch('fetchUser');
             const auth = getAuth();
-            await onAuthStateChanged(auth, (user) => {
+            onAuthStateChanged(auth, (user) => {
                 if (user) {
                     const uid = user.uid;
                     store.dispatch('fetchInfo', uid)
